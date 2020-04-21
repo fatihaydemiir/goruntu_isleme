@@ -1,0 +1,2014 @@
+--------------------------------------------------------------------
+1-DENEME
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat crtImg(240, 240, CV_8UC3, Scalar(200, 200, 200));
+
+	namedWindow("Resim Penceresi", CV_WINDOW_AUTOSIZE);
+	imshow("Resim Penceresi", crtImg);
+	waitKey(0);
+	destroyWindow("Resim Penceresi");
+
+	return 0;
+}
+--------------------------------------------------------------------
+2-Resim açmak
+--------------------------------------------------------------------
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+Mat orgImg;
+
+int main()
+{
+	orgImg = imread("resim.jpg"); //Görüntüyü orgImg Matrisine kaydediyoruz.
+
+	namedWindow("Resim Penceresi", CV_WINDOW_AUTOSIZE); //Pencere oluşturuyoruz.
+
+	if (orgImg.empty())
+	{
+		cout << "Hatalı Resim" << endl;
+		return -1; //ALGORİTMANIN HATALI OLDUĞUNU BELİRTİYORUZ.
+	}
+	else
+	{
+
+		imshow("Resim Penceresi", orgImg); //Resmi Gösteriyoruz.
+		waitKey(0); // Bir tuşa basana kadar bekliyor.
+		destroyWindow("Resim Penceresi"); //Pencereleri kapatıyoruz.
+	}
+
+
+	return 0;
+}
+
+--------------------------------------------------------------------
+3-video açmak
+--------------------------------------------------------------------
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	VideoCapture vid("video.mp4"); //Kendinize Göre Değiştirin.
+	namedWindow("Video Penceresi", CV_WINDOW_AUTOSIZE);
+
+	float fps = vid.get(CAP_PROP_FPS);
+	printf("%.2f\n", fps);
+
+	if (!vid.isOpened())
+	{
+		cout << "Hatalı yol veya video" << endl;
+		return -1;
+	}
+
+
+	while (true)
+	{
+		Mat video;
+		bool frame = vid.read(video);
+
+		if (waitKey(30) == 27 || frame == 0)
+		{
+			destroyWindow("Video Penceresi");
+			break;
+		}
+
+		imshow("Video Penceresi", video);
+	}
+
+	return 0;
+}
+--------------------------------------------------------------------
+3-Webcam  açmak
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+VideoCapture cap(0);
+
+int main()
+{
+namedWindow("Resim Penceresi", CV_WINDOW_AUTOSIZE);
+
+	if (!cap.open(0)) return 0;
+
+	while (true)
+	{
+		Mat frame;
+		cap >> frame;
+
+			if (waitKey(30) == 27 || frame.empty())
+			{
+				destroyWindow("Webcam Penceresi");
+				break;
+			}
+		imshow("Webcam Penceresi", frame);
+		
+	}
+
+	return 0;
+}
+--------------------------------------------------------------------
+4-Görüntünün Boyutlarını Öğrenmek
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int sutun, satir;
+
+int main()
+{
+	Mat orgImg = imread("resim.jpg");
+	sutun = orgImg.cols;
+	satir = orgImg.rows;
+
+	cout << "SUTUN : " << sutun << endl;
+	cout << "SATIR : " << satir << endl;
+
+	namedWindow("Resim Penceresi", CV_WINDOW_AUTOSIZE);
+	imshow("Resim Penceresi", orgImg);
+	waitKey(0);
+	destroyWindow("Resim Penceresi");
+
+
+
+	return 0;
+}
+
+
+
+--------------------------------------------------------------------
+9. Görüntüyü Boyutlandırmak
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int Width, Height;
+int main()
+{
+	Mat orgImg = imread("lena.jpg");
+	Mat newSizeImg;
+
+	resize(orgImg, newSizeImg, Size(150, 150));
+
+	Width = newSizeImg.cols;
+	Height = newSizeImg.rows;
+
+	cout << "Width : " << Width << endl;
+	cout << "Height: " << Height << endl;
+
+	namedWindow("Resim Penceresi", CV_WINDOW_AUTOSIZE);
+	imshow("Resim Penceresi", newSizeImg);
+
+	waitKey(0);
+	destroyWindow("Resim Penceresi");
+
+
+
+	return 0;
+}
+--------------------------------------------------------------------
+10. Boş Renkli Resim Oluşturmak
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat crtim(240, 240, CV_8UC3, Scalar(0, 0, 0)); //boyut,bit(3 KANALLI),renk
+	namedWindow("resim penceresi", CV_WINDOW_AUTOSIZE);
+	imshow("resim penceresi", crtim);
+	waitKey(0);
+	return 0;
+}
+
+
+--------------------------------------------------------------------
+11. Boş Gri Resim Oluşturmak
+
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat  crtGray(300, 300, CV_8UC1, Scalar(100));
+	namedWindow("resim penceresi", CV_WINDOW_AUTOSIZE);
+	imshow("resim penceresi", crtGray);
+	waitKey(0);
+	return 0;
+
+}
+--------------------------------------------------------------------
+12. Görüntüyü griye dönüştürmek
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	Mat resimgray;
+	Mat newSizeImg;
+	cvtColor(resim, resimgray, CV_BGR2GRAY); // griye döndürdüm
+	resize(resimgray, newSizeImg, Size(400,400)); //resimi boyutlandırdım
+	imshow("resim", newSizeImg);
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+13. Görüntüyü Binarye Çevirmek(Treshold)
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	Mat gri,binary;
+	cvtColor(resim, gri, CV_BGR2GRAY);
+	threshold(gri, binary, 30, 255,THRESH_BINARY);//30 altındakiler //kayboluyor renk sıkalasında
+
+	imshow("gri resim", gri);
+	imshow("çıkış", binary);
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+14.Görüntünün negatif hali
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	Mat tersbit;
+	bitwise_not(resim, tersbit);//0 255 oluyor 255 0 oluyor
+	imshow("ters resim", tersbit);
+	imshow("orjin resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+}
+--------------------------------------------------------------------
+
+15. Merge(kanallları birleştirmye yarıyor),Split(kanalları ayırıyor) İle Kanal Ayırmak
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat image = imread("resim.jpg");
+	imshow("resim:", image);
+	Mat rgbkanal[3];
+
+	split(image, rgbkanal); //ayırdık kanalları
+	imshow("red", rgbkanal[0]);//red yogunluklu
+	imshow("green", rgbkanal[1]);//green yogunluklu
+	imshow("blue", rgbkanal[2]);//blue yogunluklu
+
+	vector<Mat> kanallar;
+	kanallar.push_back(rgbkanal[0]);//red
+	kanallar.push_back(rgbkanal[1]);//green 
+	kanallar.push_back(rgbkanal[2]);//blue
+
+	merge(kanallar, image);
+	imshow("mergelenmiş", image);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+}
+--------------------------------------------------------------------
+
+16. Renkli Resmin Piksellerine Ulaşmak
+--------------------------------------------------------------------
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int blue, green, red;
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	
+	blue = resim.at<Vec3b>(100, 120)[0]; //(100,120)ulaşmak istediğim satır ve sütün sayısı
+	green = resim.at<Vec3b>(100, 120)[1];
+	red = resim.at<Vec3b>(100, 120)[2];//renklioldugundan 3 kanal=vec3b
+
+	cout << "mavi:" << blue << endl;
+	cout << "yesil:" << green << endl;
+	cout << "kirmizi:" << red << endl;
+
+	imshow("resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+}
+--------------------------------------------------------------------
+
+17. gri Resmin Piksellerine Ulaşmak
+--------------------------------------------------------------------
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <iostream>
+
+using namespace std;
+using namespace cv;
+
+int blue, green, red;
+int main()
+{
+	Mat griresim;
+	Mat resim = imread("resim.jpg");
+	cvtColor(resim, griresim,CV_BGR2GRAY);
+
+	int yogunluk= griresim.at<uchar>(100, 200); //uchar unsignad char tek kanallı oldugundan
+	
+
+	cout << "yogunluk:" << yogunluk << endl;
+
+
+	imshow("resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+}
+
+
+
+--------------------------------------------------------------------
+
+18. Görüntünün Kontrastını Ayarlamak Hazır Fonksiyon
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat orgImg = imread("resim.jpg");
+	Mat newConstImg,yuksekkontrast,alcakkontrast;
+
+	orgImg.convertTo(yuksekkontrast, -1, 2, 0);//beyazlıyor
+	orgImg.convertTo(alcakkontrast, -1, 0.5, 0);//siyahlaşıypr
+
+	
+
+	imshow("Resim Penceresi", orgImg);
+	imshow("yüksek kontrast", yuksekkontrast);
+	imshow("alçak kontrast", alcakkontrast);
+
+	waitKey(0);
+	destroyAllWindows();
+	return 0;
+}
+--------------------------------------------------------------------
+
+19. Kontrast Fonksiyonunu Kendimiz Yazalım (*)
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+
+using namespace std;
+using namespace cv;
+
+Mat newCont;
+void convert(Mat input, Mat output, int derinlik, float alfa)
+{
+	if (derinlik == -1)
+	{
+		for (int i = 0;i < input.rows;i++)
+		{
+			for (int j = 0;j < input.cols;j++)
+			{
+				if (input.at<Vec3b>(i, j)[0] * alfa > 255 )input.at<Vec3b>(i, j)[0] = 255;
+				else input.at<Vec3b>(i, j)[0] = input.at<Vec3b>(i, j)[0] * alfa;
+
+				if (input.at<Vec3b>(i, j)[1] * alfa > 255) input.at<Vec3b>(i, j)[1] = 255;
+				else input.at<Vec3b>(i, j)[1] = input.at<Vec3b>(i, j)[1] * alfa;
+
+				if (input.at<Vec3b>(i, j)[2] * alfa > 255) input.at<Vec3b>(i, j)[2] = 255;
+				else input.at<Vec3b>(i, j)[2] = input.at<Vec3b>(i, j)[2] * alfa;
+
+			}
+		}
+	}
+	else if (derinlik == 1)
+	{
+		cvtColor(input, input,CV_BGR2GRAY);
+		for (int i = 0;i < input.rows;i++)
+		{
+			for (int j = 0;j < input.cols;j++)
+			{
+				if (input.at<uchar>(i, j)*alfa > 255)input.at<uchar>(i, j) = 255 ;
+				else(input.at<uchar>(i, j)) = input.at<uchar>(i, j)*alfa;
+			}
+		}
+	}
+	newCont = input;
+}
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	imshow("resim", resim);
+
+	convert(resim, newCont, -1, 2.0); // rekli -1
+	imshow("renkli resim", newCont);
+
+	convert(resim, newCont, 1, 0.5); //gri 1
+	imshow("griresim", newCont);
+
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+
+20. Görüntünün Parlaklığını Ayarlayalım
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat orgImg = imread("resim.jpg");
+	Mat newlow,newhıgh;
+
+	orgImg.convertTo(newlow, -1, 1, -200);
+	orgImg.convertTo(newhıgh, -1, 1, 200);
+
+
+	imshow(" orjinal Resim Penceresi", orgImg);
+	imshow("parlak Resim Penceresi", newhıgh);
+	imshow("parlak olmayan Resim Penceresi", newlow);
+
+	waitKey(0);
+	destroyAllWindows();
+	return 0;
+}
+--------------------------------------------------------------------
+
+21. Parlaklık Fonksiyonunu Kendimiz Yazalım
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+
+using namespace std;
+using namespace cv;
+
+Mat newCont;
+void convert(Mat input, Mat output, int derinlik, float alfa,float beta)
+{
+	if (derinlik == -1)
+	{
+		for (int i = 0;i < input.rows;i++)
+		{
+			for (int j = 0;j < input.cols;j++)
+			{
+				if (input.at<Vec3b>(i, j)[0] * alfa+beta > 255)input.at<Vec3b>(i, j)[0] = 255;
+				else input.at<Vec3b>(i, j)[0] = input.at<Vec3b>(i, j)[0] * alfa + beta;
+
+				if (input.at<Vec3b>(i, j)[1] * alfa + beta > 255) input.at<Vec3b>(i, j)[1] = 255;
+				else input.at<Vec3b>(i, j)[1] = input.at<Vec3b>(i, j)[1] * alfa + beta;
+
+				if (input.at<Vec3b>(i, j)[2] * alfa + beta > 255) input.at<Vec3b>(i, j)[2] = 255;
+				else input.at<Vec3b>(i, j)[2] = input.at<Vec3b>(i, j)[2] * alfa + beta;
+
+			}
+		}
+	}
+	else if (derinlik == 1)
+	{
+		cvtColor(input, input, CV_BGR2GRAY);
+		for (int i = 0;i < input.rows;i++)
+		{
+			for (int j = 0;j < input.cols;j++)
+			{
+				if (input.at<uchar>(i, j)*alfa + beta > 255)input.at<uchar>(i, j) = 255;
+				else if (input.at<uchar>(i, j)*alfa + beta < 255)input.at<uchar>(i, j) = 0;
+				else(input.at<uchar>(i, j)) = input.at<uchar>(i, j)*alfa;
+			}
+		}
+	}
+	newCont = input;
+}
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	imshow("resim", resim);
+
+	convert(resim, newCont, -1,1.0,100); // rekli -1,1kontrast,parlaklık edgeri
+	imshow("renkli resim", newCont);
+
+	convert(resim, newCont, 1, 1.0,100); //gri 1
+	imshow("griresim", newCont);
+
+	waitKey(0);
+	return 0;
+}
+
+
+
+
+--------------------------------------------------------------------
+
+22. Trackbar Kullanımı (Önemli)
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+int trackVal;
+
+int main()
+{
+
+	namedWindow("Trackbar Penceresi", CV_WINDOW_AUTOSIZE);
+	createTrackbar("Name", "Trackbar Penceresi", &trackVal, 100);
+
+	while (true)
+	{
+		cout << trackVal<<endl;
+
+		if (waitKey(10) == 27)
+		{
+			break;
+		}
+	}
+
+	return 0;
+}
+
+Veya trackbar?????????????????
+
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+int trackVal;
+
+void callbacktrack(int, void*)
+{
+	count << trackVal << endl;
+}
+
+int main()
+{
+
+	namedWindow("Trackbar Penceresi", CV_WINDOW_AUTOSIZE);
+	createTrackbar("Name", "Trackbar Penceresi", &trackVal, 100,callbacktrack);
+	return 0;
+}
+--------------------------------------------------------------------
+
+23. Görüntü Üzerine Metin Yazma
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+
+
+int main()
+{
+	Mat resim(500, 500, CV_8UC3, Scalar(255, 0, 0));
+	putText(resim, "deneme", Point(100, 100),FONT_HERSHEY_PLAIN, 3, Scalar(0, 255, 0), 4);
+	imshow("resim", resim);
+
+	waitKey(0);
+	destroyWindow;
+	return 0;
+
+}
+--------------------------------------------------------------------
+
+24. Görüntü Üzerine Lineer Çizgi Çizmek
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	line(resim, Point(100, 50), Point(400, 50), Scalar(0, 0, 255), 3,CV_AA, 0);
+
+	imshow("resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+
+}
+--------------------------------------------------------------------
+25. Kendimiz Çizgi Çekme Fonksiyonunu
+Baştan Yazalım
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+Point Point1 = Point(300, 50);
+Point Point2 = Point(400, 50);
+
+void line(Mat input, Point Pt1, Point Pt2, Scalar scalar, int kalinlik)
+{
+	for (int i = Pt1.x;i < Pt2.x;i++)
+	{
+		for (int j = Pt1.y;j < Pt1.y + kalinlik;j++) 
+		{
+			//input.at<Vec3b>(j, i)[0] = scalar[0]; //1.kanal için transparan görmek için bu kanallları kapadım transparan istemezen kapat bunları
+			//input.at<Vec3b>(j, i)[1] = scalar[1];//2.kanal içintransparan görmek için bu kanallları kapadım
+			input.at<Vec3b>(j, i)[2] = scalar[2];//3.kanal için
+		}
+	}
+	
+}
+int main()
+{
+	Mat resim = imread("resim.jpg");
+	line(resim, Point1, Point2,Scalar(0, 0, 255), 10);
+	imshow("resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+
+}
+
+--------------------------------------------------------------------
+26. Görüntü Üzerine Daire Çizmek
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+
+
+int main()
+{
+	Mat resim(500, 500, CV_8UC3, Scalar(0, 0, 255));
+	circle(resim, Point(100,200), 40, Scalar(255, 0, 0), 1, 8, 0);
+	imshow("resim", resim);
+	waitKey(0);
+	destroyWindow;
+	return 0;
+
+}
+
+--------------------------------------------------------------------
+Not: Arka plan ile ön plan ayırma
+--------------------------------------------------------------------
+
+#include "opencv2/core.hpp"
+#include <opencv2/core/utility.hpp>
+#include "opencv2/imgproc.hpp"
+#include "opencv2/video/background_segm.hpp"
+#include "opencv2/videoio.hpp"
+#include "opencv2/highgui.hpp"
+#include <stdio.h>
+
+using namespace std;
+using namespace cv;
+
+//yöntem olarak createBackgroundSubtractorKNN() 'de seçilebilir
+Ptr<BackgroundSubtractor> arkaPlanCikarmaYontemi = createBackgroundSubtractorMOG2();
+
+Mat goruntu; //kameradan alınan görüntü
+Mat arkaPlanMaskesi; //maske
+Mat	arkaPlaniCikarilmisGoruntu;
+Mat arkaPlanGoruntusu; //arka plan
+
+int main()
+{
+	//arkaPlaniCikarilmisGoruntu yü yumuşatmak ve pürüzler kaldırmak isterseniz burayı true olarak değiştiriniz
+	bool puruzleriKaldir = true;
+
+	VideoCapture yakala(0);
+
+	while (waitKey(30) != 27) 	//esc'ye basılmadığı sürece döngü çalışsın
+	{
+		yakala >> goruntu;
+		flip(goruntu, goruntu, 1); //goruntu nün yatayda simetrisi aliniyor
+
+		if (arkaPlaniCikarilmisGoruntu.empty()) //arkaPlaniCikarilmisGoruntu eğer yoksa oluşturuldu
+			arkaPlaniCikarilmisGoruntu.create(goruntu.size(), goruntu.type());
+
+		//burası true olursa belirli bir süre sabit duran yeni görüntüler artık arkaplan olarak kabul edilecektir
+		arkaPlanCikarmaYontemi->apply(goruntu, arkaPlanMaskesi, false);
+
+		if (puruzleriKaldir)
+		{
+			//histogram eşitlemesi yapıldı
+			equalizeHist(arkaPlanMaskesi, arkaPlanMaskesi);
+
+			//resim bulanıklaştırılıyor yani
+			//bir nevi yumuşatılıyor
+			GaussianBlur(arkaPlanMaskesi, arkaPlanMaskesi, Size(11, 11), 3.5, 3.5);
+
+			//belli eşik değerinin altındaki pikseller siyah, diğerleri beyaz yapılıyor
+			threshold(arkaPlanMaskesi, arkaPlanMaskesi, 100, 255, THRESH_BINARY);
+
+			//morfolojik acma yapiliyor
+			//resimdeki beyaz gurultuler engelleniyor
+			//once asindirma sonra genisletme yapiliyor
+			erode(arkaPlanMaskesi, arkaPlanMaskesi, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));//aşındırma
+			dilate(arkaPlanMaskesi, arkaPlanMaskesi, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));//genişletme
+
+			//morfolojik kapanma yapiliyor
+			//beyaz olan nesnelerin arasindaki kucuk siyah holler temizleniyor
+			//once genisletme sonra asindirma yapiliyor
+			dilate(arkaPlanMaskesi, arkaPlanMaskesi, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+			erode(arkaPlanMaskesi, arkaPlanMaskesi, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+		}
+
+		arkaPlaniCikarilmisGoruntu = Scalar::all(0);//arkaplanın tüm pikselleri 0 yani siyah ayarlandı
+
+													//burada goruntu üzerine arkaPlanMaskesi uygulanarak arkaPlaniCikarilmisGoruntu elde edildi
+													//goruntu giriş matrisi, arkaPlaniCikarilmisGoruntu çıkış matrisi, arkaPlanMaskesi maske
+		goruntu.copyTo(arkaPlaniCikarilmisGoruntu, arkaPlanMaskesi);
+
+		arkaPlanCikarmaYontemi->getBackgroundImage(arkaPlanGoruntusu); //arka plan arkaPlanGoruntusu nesnesine aktarıldı
+		imshow("Arka Plan Görüntüsü", arkaPlanGoruntusu); //arka plan pencerede gösteriliyor
+
+		imshow("Kameradan Alınan Görüntü", goruntu); //kameradan alınan görüntü pencerede gösteriliyor
+		imshow("Maske Görüntüsü", arkaPlanMaskesi); //arkaPlanMaskesi pencerede gösteriliyor
+		imshow("Arka Planı Çıkarılmış Görüntü", arkaPlaniCikarilmisGoruntu); //arka planı çıkarılmış görüntü pencerede gösteriliyor
+
+	}
+	return 0;
+}
+
+--------------------------------------------------------------------
+Not: Ekranda işaretlenmiş nokta takibi
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include <opencv2/imgproc/imgproc.hpp>  //rectangle fonksiyonu için
+#include <opencv2\opencv.hpp> //nokta takibi için gerekli
+
+using namespace std;
+using namespace cv;
+
+Mat goruntu; //kameradan alınan frame
+cv::Mat kesilenResim; //dikdörtgenle kesilip diğer pencereye aktarılan görüntü
+
+					  //İki koordianatın toplamı, Ana Pencerede tıklanılan yere çizilen dairenin Merkez koordinatını veriyor
+Point nokta = 0;
+Point noktaEk = 0;
+
+int kareGenisligininYarisi = 50;
+int goruntuBuyutmeKatSayisi = 4;
+
+Mat griResimYeni, griResimEski;
+
+bool ilkTik = false;//ilk defa nokta seçildiğinde
+
+vector<Point2f>oncekiNokta, sonrakiNokta; //önceki ve sonraki noktalar
+vector<uchar> durum; //nokta var mı yok mu
+vector<float> hata; //hesaplama hatası
+
+Scalar kirmizi(0, 0, 255);
+Scalar yesil(0, 255, 0);
+
+Scalar secilenRenk = kirmizi;
+
+void fareTakipYakinPencere(int event, int x, int y, int flags, void *kullanici)
+{
+	//farenin sol tuşuna basınca
+	if ((event == EVENT_LBUTTONDOWN) || (flags == EVENT_FLAG_LBUTTON && event == EVENT_MOUSEMOVE))
+	{
+		noktaEk.x = x / goruntuBuyutmeKatSayisi - kareGenisligininYarisi;
+		noktaEk.y = y / goruntuBuyutmeKatSayisi - kareGenisligininYarisi;
+
+		oncekiNokta.push_back(Point(nokta.x + noktaEk.x, nokta.y + noktaEk.y)); //önceki noktanın yeri
+
+		if (ilkTik == false)
+		{
+			ilkTik = true;
+		}
+	}
+
+	//farenin sağ tuşuna basınca
+	if (event == EVENT_RBUTTONDOWN)
+	{
+		if (secilenRenk == kirmizi)
+		{
+			secilenRenk = yesil;
+		}
+		else
+		{
+			secilenRenk = kirmizi;
+		}
+	}
+}
+
+void fareTakipAnaPencere(int event, int x, int y, int flags, void *kullanici)
+{
+	//farenin sol tuşuna basınca veya
+	//farenin sol tuşana basarak sürükleyince
+	if ((event == EVENT_LBUTTONDOWN) || (flags == EVENT_FLAG_LBUTTON && event == EVENT_MOUSEMOVE))
+	{
+		nokta.x = x;
+		nokta.y = y;
+
+		noktaEk.x = 0;
+		noktaEk.y = 0;
+	}
+}
+
+void goruntuAnaliz() {
+	VideoCapture video(0); //dahili webcam icin 0 yaziniz harici webcamlar icin 1,2,3 gibi sayilar yaziniz
+	if (!video.isOpened())//eger webcam acilamazsa
+	{
+		cout << "Webcam acilamadi" << endl;
+	}
+
+	while (true) //sonsuz dongu
+	{
+		if (!ilkTik)
+		{
+			video.read(goruntu); //video'yu img'ye frame frame okuyor		
+			flip(goruntu, goruntu, 1); //frame'in yatayda simetrisi aliniyor
+
+									   //nokta takibi için kameradan alınan görüntü gri formata dönüştürüldü
+			cvtColor(goruntu, griResimYeni, CV_BGR2GRAY);
+		}
+
+		griResimEski = griResimYeni.clone(); //aynı özelliklere sahip goruntu kopyalandı 
+
+											 //aşağıdaki ifade video>>goruntu; şeklindede yazılabilir
+		video.read(goruntu); //video'yu img'ye frame frame okuyor
+
+		flip(goruntu, goruntu, 1); //frame'in yatayda simetrisi aliniyor
+
+								   //nokta takibi için kameradan alınan görüntü gri formata dönüştürüldü
+		cvtColor(goruntu, griResimYeni, CV_BGR2GRAY);
+
+		//herhangi bir nokta tıklandıysa
+		if (ilkTik) {
+
+			//eski resimdeki noktayı yeni resimde arar
+			calcOpticalFlowPyrLK(griResimEski, griResimYeni, oncekiNokta, sonrakiNokta, durum, hata);
+
+			//oncekiNokta.size() fonksiyonu işaretlenen nokta sayısını verir
+			for (int i = 0; i < oncekiNokta.size(); i++)
+			{
+				//takip edilen nokta yerine beyaz piksel koyuyor
+				line(goruntu, sonrakiNokta[i], sonrakiNokta[i], secilenRenk, 3, 8, 0);
+
+				oncekiNokta[i] = sonrakiNokta[i]; //sonraki bulunan noktayı önceki nokta yapar.
+			}
+		}
+
+		//kamera açılır açılmaz sol üstte nokta şeklinde dikdörtgen beliriyordu
+		//bu koşul ifadesiyle dikdörtgeni engelledik
+		if (!(nokta.x == 0 && nokta.y == 0))
+		{
+			circle(goruntu, Point(nokta.x + noktaEk.x, nokta.y + noktaEk.y), 3, Scalar(255, 191, 0), 1, 8, 0);
+
+			//resmin sol üstü (0,0) konumu olarak kabul ediliyor		
+			int x = nokta.x - kareGenisligininYarisi; //x eksenindeki başlangıç konumu
+			int y = nokta.y - kareGenisligininYarisi; //y eksenindeki başlangıç konumu
+
+													  //seçilen bölgenin etrafına dikdörtgen çiziliyor
+			rectangle(goruntu, Point(nokta.x + noktaEk.x - kareGenisligininYarisi, nokta.y + noktaEk.y - kareGenisligininYarisi), Point(nokta.x + noktaEk.x + kareGenisligininYarisi, nokta.y + noktaEk.y + kareGenisligininYarisi), Scalar(255, 191, 0), 4, 8, 0);
+
+			cv::Rect dikdortgen;
+			dikdortgen.x = x; //kesilen resmin x eksenindeki başlangıç konumu
+			dikdortgen.y = y; //kesilen resmin y eksenindeki başlangıç konumu
+			dikdortgen.width = kareGenisligininYarisi * 2; //kesilen resmin genişliği
+			dikdortgen.height = kareGenisligininYarisi * 2; //kesilen resmin yüksekliği				
+
+			kesilenResim = goruntu(dikdortgen);//oluşturulan dikdörtgene göre goruntu kesiliyor
+			resize(kesilenResim, kesilenResim, Size(), goruntuBuyutmeKatSayisi, goruntuBuyutmeKatSayisi, INTER_LINEAR);//kesile görüntü büyütüldü
+			cv::imshow("Yakınlaşan Görüntü", kesilenResim);
+		}
+
+		imshow("Ana Pencere", goruntu);
+
+		setMouseCallback("Ana Pencere", fareTakipAnaPencere, NULL);
+		setMouseCallback("Yakınlaşan Görüntü", fareTakipYakinPencere, NULL);
+
+		//esc'ye basılırsa programdan çıkılıyor
+		//20 milisaniyede bir yeni frame alınıyor
+		if (waitKey(20) == 27) //27 ascii tus karsiligi ESC tusudur. 
+		{
+			break;
+		}
+	}
+}
+
+int main()
+{
+	namedWindow("Ana Pencere", CV_WINDOW_AUTOSIZE);
+	namedWindow("Yakınlaşan Görüntü", CV_WINDOW_AUTOSIZE);
+
+	goruntuAnaliz();
+
+	return 0;
+}
+--------------------------------------------------------------------
+Not: Ekranda köşe bulma trackbar de var
+--------------------------------------------------------------------
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include <stdlib.h>
+#include <stdio.h>
+
+using namespace cv;
+
+Mat src, src_gray;
+Mat dst, detected_edges;
+
+int edgeThresh = 1;
+int lowThreshold;
+int const max_lowThreshold = 100;
+int ratio = 3;
+int kernel_size = 3;
+String window_name = "Kenar Bulma";
+
+void CannyThreshold(int, void*)
+{
+	//gürültü azaltılıyor
+	blur(src_gray, detected_edges, Size(3, 3));
+
+	Canny(detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size);
+
+	dst = Scalar::all(0);
+
+	src.copyTo(dst, detected_edges);
+	imshow(window_name, dst);
+}
+
+int main()
+{
+	//resim yükleniyor
+	src = imread("resim.jpg");
+
+	if (!src.data)
+	{
+		return -1;
+	}
+
+	//src ile aynı türde ve boyutta matris oluşturuldu
+	dst.create(src.size(), src.type());
+
+	//resim gri yapıldı
+	cvtColor(src, src_gray, CV_BGR2GRAY);
+
+	//pencere oluşturuldu
+	namedWindow(window_name, CV_WINDOW_AUTOSIZE);
+
+	//Trackbar eklendi
+	createTrackbar("Eşik:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold);
+
+	//resim gösteriliyor
+	CannyThreshold(0, 0);
+
+	//bir tuşa basınca program kapanıyor
+	waitKey(0);
+
+	return 0;
+}
+--------------------------------------------------------------------
+Not: resimde daire bulmak
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include <iostream>
+#include <stdio.h>
+
+using namespace cv;
+using namespace std;
+
+int main()
+{
+	Mat src, src_gray;
+
+	//Resim okunuyor
+	src = imread("resim.jpg", 1);
+
+	if (!src.data)
+	{
+		return -1;
+	}
+
+	//Gri resme dönüştürüldü
+	cvtColor(src, src_gray, CV_BGR2GRAY);
+
+	//Yanlış daire tespitini önlemek için resim gürültüsü azaltıldı
+	GaussianBlur(src_gray, src_gray, Size(9, 9), 2, 2);
+
+	vector<Vec3f> circles;
+
+	HoughCircles(src_gray, circles, CV_HOUGH_GRADIENT, 1, src_gray.rows / 8, 200, 100, 0, 0);
+
+	//Daireler bulunuyor
+	for (size_t i = 0; i < circles.size(); i++)
+	{
+		//circles in üç değeri vardır
+		//ilk iki değer merkezin konumu (x ve y cinsinden)
+		Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+
+		//üçüncü değer yarıçap
+		int radius = cvRound(circles[i][2]); //yarıçap
+
+											 //Daire merkezleri
+		circle(src, center, 3, Scalar(0, 255, 0), -1, 8, 0);
+		//Dıştaki daire
+		circle(src, center, radius, Scalar(0, 0, 255), 3, 8, 0);
+	}
+
+	//Pencerede daireler gösteriliyor
+	namedWindow("Daire Tespiti", CV_WINDOW_AUTOSIZE);
+	imshow("Daire Tespiti", src);
+
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+Not: Ekranda renk takibi (treckbar lı)
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+using namespace cv;
+
+
+int main()
+{
+	VideoCapture video(0);
+	if (!video.isOpened())
+	{
+		cout << "Webcam Acilamadi";
+		system("pause");
+		return -1;
+	}
+	namedWindow("Kontrol Paneli", CV_WINDOW_AUTOSIZE);
+
+	//HSV formatinda bu degerler kirmiziyi ifade ediyor
+	int HMinDeg = 170;
+	int HMaxDeg = 179;
+	int SMinDeg = 150;
+	int SMaxDeg = 255;
+	int VMinDeg = 60;
+	int VMaxDeg = 255;
+
+	createTrackbar("minH", "Kontrol Paneli", &HMinDeg, 179);
+	createTrackbar("maxH", "Kontrol Paneli", &HMaxDeg, 179);
+
+	createTrackbar("minS", "Kontrol Paneli", &SMinDeg, 255);
+	createTrackbar("maxS", "Kontrol Paneli", &SMaxDeg, 255);
+
+	createTrackbar("minV", "Kontrol Paneli", &VMinDeg, 255);
+	createTrackbar("maxV", "Kontrol Paneli", &VMaxDeg, 255);
+
+	int eskiX = -1;
+	int eskiY = -1;
+
+	//siyah arkapilan
+	Mat arkaPlan;
+
+	video.read(arkaPlan);
+
+	//zeros yani 0(siyah renk demek) lar matrisi olusturuldu
+	//cizgiler bu cizgiResim uzerine cizlecek
+	Mat cizgiResim = Mat::zeros(arkaPlan.size(), CV_8UC3);
+
+	while (true)
+	{
+		Mat yeniFrame;
+		bool bSuccess = video.read(yeniFrame);
+		if (!bSuccess)
+		{
+			cout << "Yeni Frame Yuklenemedi" << endl;
+			system("pause");
+			break;
+		}
+
+
+		Mat HSVres;
+
+		//renk ayirma(yani secme) isleminde BGR formati HSV formatindan daha basarili oldugu icin
+		//Webcam'den alinan BGR formatindaki goruntu HSV formatina donusturuldu
+		cvtColor(yeniFrame, HSVres, COLOR_BGR2HSV);
+
+
+		Mat isres;
+
+		//araliktaki degerler 1 diger degerlere 0 veriyor
+		inRange(HSVres, Scalar(HMinDeg, SMinDeg, VMinDeg), Scalar(HMaxDeg, SMaxDeg, VMaxDeg), isres);
+
+#pragma region resimde olusan gurultu engelleniyor
+
+		//morfolojik acma yapiliyor
+		//resimdeki beyaz gurultuler engelleniyor
+		//once asindirma sonra genisletme yapiliyor
+		erode(isres, isres, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+		dilate(isres, isres, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+		//morfolojik kapanma yapiliyor
+		//beyaz olan nesnelerin arasindaki kucuk siyah holler temizleniyor
+		//once genisletme sonra asindirma yapiliyor
+		dilate(isres, isres, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+		erode(isres, isres, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+#pragma endregion
+
+		//siyah beyaz bir resimdeki beyaz renklerin konumunu bulur
+		//bu konumlar konum degiskenine atandi
+		Moments konum = moments(isres);
+
+		//piksel degerleri 1 olan piksellerin y eksenindeki konumu bulundu
+		double yEksen = konum.m01;
+		//piksel degerleri 1 olan piksellerin x eksenindeki konumu bulundu
+		double xEksen = konum.m10;
+		//degeri 1 olan piksellerin alani bulundu
+		double alan = konum.m00;
+
+		if (alan > 100000)
+		{
+			int yeniX = xEksen / alan;
+			int yeniY = yEksen / alan;
+
+			//bu degerler 0 dan buyukse
+			if (eskiX >= 0 && eskiY >= 0 && yeniX >= 0 && yeniY >= 0)
+			{
+				//1. parametredeki konumdan 2. parametredeki konuma
+				//3. parametrede belirtilen kirmizi renkte
+				//4. parametrede belirtilen kalinlikta yani 2 piksel boyutunda
+				//Siyah uzerine (cizgiResim) cizgi cizer
+				line(cizgiResim, Point(yeniX, yeniY), Point(eskiX, eskiY), Scalar(0, 0, 255), 2);
+			}
+
+			//son bulunan koordinatlar saklanmak icin degiskenlere ataniyor
+			eskiX = yeniX;
+			eskiY = yeniY;
+		}
+
+		imshow("Siyah Beyaz Resim", isres);
+
+		//webcam'deki goruntuye cizgiler eklendi
+		yeniFrame = yeniFrame + cizgiResim;
+
+		imshow("Orjinal", yeniFrame);
+
+		if (waitKey(100) == 27)
+		{
+			cout << "Kullanici esc ile cikti" << endl;
+			break;
+		}
+	}
+	cvDestroyAllWindows();
+	system("pause");
+	return 0;
+}
+--------------------------------------------------------------------
+Not:Ekranda fare kordinatları
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+void fareTakip(int event, int x, int y, int flags, void *kullanici)
+{
+	if (event == EVENT_LBUTTONDOWN)
+	{
+		cout << "Fare'ye Sol Tiklandi. Fare Koordinati: " << x << "x" << y << endl;
+	}
+	else if (event == EVENT_RBUTTONDOWN)
+	{
+		cout << "Fare'ye Sag Tiklandi. Fare Koordinati: " << x << "x" << y << endl;
+	}
+	else if (event == EVENT_MBUTTONDOWN)
+	{
+		cout << "Fare'nin Orta Tusuna Tiklandi. Fare Koordinati: " << x << "x" << y << endl;
+	}
+	else if (event == EVENT_MOUSEMOVE)
+	{
+		cout << "Fare Hareket Ediyor. Fare Koordinati: " << x << "x" << y << endl;
+	}
+}
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+
+	namedWindow("Fare Penceresi", CV_WINDOW_AUTOSIZE);
+	setMouseCallback("Fare Penceresi", fareTakip, NULL);
+
+	imshow("Fare Penceresi", resim);
+
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+Not:Klavyeden basılan tuşa komut atama
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+void klavyeTakip(int event, int x, int y, int flags, void *kullanici)
+{
+	if (flags == (EVENT_FLAG_CTRLKEY + EVENT_FLAG_LBUTTON))
+	{
+		cout << "Ctrl + Fare_Sol Fare_Konum:" << x << "x" << y << endl;
+	}
+	else if (flags == (EVENT_FLAG_SHIFTKEY + EVENT_FLAG_RBUTTON))
+	{
+		cout << "Shift + Fare_Sag Fare_Konum:" << x << "x" << y << endl;
+	}
+	else if (event == EVENT_MOUSEMOVE && flags == EVENT_FLAG_ALTKEY)
+	{
+		cout << "Alt + Fare_Hareketli Fare_Konum:" << x << "x" << y << endl;
+	}
+}
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+
+	namedWindow("Fare Penceresi", CV_WINDOW_AUTOSIZE);
+	setMouseCallback("Fare Penceresi", klavyeTakip, NULL);
+
+	imshow("Fare Penceresi", resim);
+
+	waitKey(0);
+
+	return 0;
+}
+--------------------------------------------------------------------
+Not:yüz tanıma (kütüphane eklemelisin)
+--------------------------------------------------------------------
+#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp> 
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+using namespace cv;
+int main(int argc, const char** argv)
+{
+	CascadeClassifier nesne;
+	nesne.load("haarcascade_frontalface_default.xml");
+	VideoCapture vid;
+	vid.open(0);
+
+	if (!vid.isOpened())
+	{
+		cout << "webcam yuklenemedi" << endl; system("Pause"); return -1;
+	} Mat frame; Mat grires; namedWindow("Yuz Tanima", 1); while (true) {
+		vid >> frame;
+		cvtColor(frame, grires, CV_BGR2GRAY);  //resmi gri yapar
+
+		vector<Rect> nesvek;
+		nesne.detectMultiScale(grires, nesvek, 1.1,3, 0, Size(30,30));
+		for (int i = 0; i < nesvek.size(); i++)
+		{
+			Point pt1(nesvek[i].x + nesvek[i].width, nesvek[i].y + nesvek[i].height);
+			Point pt2(nesvek[i].x, nesvek[i].y);
+			rectangle(frame, pt1, pt2, cvScalar(0, 255, 0, 0), 1, 8, 0);
+		}
+		imshow("Yuz Tanima", frame);
+		waitKey(33);
+	}
+	return 0;
+}
+--------------------------------------------------------------------
+Not:göz bulmak (kütüphane eklemelisin)
+--------------------------------------------------------------------
+
+#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp> 
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+using namespace cv;
+int main(int argc, const char** argv)
+{
+	CascadeClassifier nesne;
+	nesne.load("haarcascade_eye.xml");
+	VideoCapture vid;
+	vid.open(0);
+
+	if (!vid.isOpened())
+	{
+		cout << "webcam yuklenemedi" << endl; system("Pause"); return -1;
+	} Mat frame; Mat grires; namedWindow("Yuz Tanima", 1); while (true) {
+		vid >> frame;
+		cvtColor(frame, grires, CV_BGR2GRAY);  //resmi gri yapar
+
+		vector<Rect> nesvek;
+		nesne.detectMultiScale(grires, nesvek, 1.1, 3, 0, Size(30, 30));
+		for (int i = 0; i < nesvek.size(); i++)
+		{
+			Point pt1(nesvek[i].x + nesvek[i].width, nesvek[i].y + nesvek[i].height);
+			Point pt2(nesvek[i].x, nesvek[i].y);
+			rectangle(frame, pt1, pt2, cvScalar(0, 255, 0, 0), 1, 8, 0);
+		}
+		imshow("Yuz Tanima", frame);
+		waitKey(33);
+	}
+	return 0;
+}
+--------------------------------------------------------------------
+Not:video döndürmek
+--------------------------------------------------------------------
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	VideoCapture video("video.mp4");
+
+	if (!video.isOpened())
+	{
+		cout << "Video bulunamadi" << endl;
+
+	}
+
+	namedWindow("Video Dondurme", CV_WINDOW_AUTOSIZE);
+	int aci = 180;
+	createTrackbar("Aci", "Video Dondurme", &aci, 360);
+
+	while (true)
+	{
+		Mat frame;
+		bool kontrol = video.read(frame);
+
+		if (!kontrol)
+		{
+			cout << "Frame yuklenemedi" << endl;
+		}
+
+		Mat benzerlikMatrisi = getRotationMatrix2D(Point(frame.cols / 2, frame.rows / 2), aci - 180, 1);
+		Mat donenFrame;
+		warpAffine(frame, donenFrame, benzerlikMatrisi, frame.size());
+		imshow("Video Dondurme", donenFrame);
+
+		//dongu 50 milisaniye bir calisiyor
+		//bu surede esc ye basilirsa program kapaniyor
+		if (waitKey(50) == 27)
+		{
+			return 0;
+		}
+	}
+}
+
+
+--------------------------------------------------------------------
+Not:resim döndürmek
+--------------------------------------------------------------------
+
+#include <iostream>
+
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+
+using namespace std;
+using namespace cv;
+
+int main()
+{
+	Mat resim = imread("resim.jpg");
+
+	namedWindow("Resim Dondurme", CV_WINDOW_AUTOSIZE);
+	int aci = 180;
+	createTrackbar("Aci", "Resim Dondurme", &aci, 360);
+
+	while (true)
+	{
+		Mat benzerlikMatrisi = getRotationMatrix2D(Point(resim.cols / 2, resim.rows / 2), aci - 180, 1);
+		Mat donenResim;
+		warpAffine(resim, donenResim, benzerlikMatrisi, resim.size());
+		imshow("Resim Dondurme", donenResim);
+
+		//dongu 50 milisaniye bir calisiyor
+		//bu surede esc ye basilirsa program kapaniyor
+		if (waitKey(50) == 27)
+		{
+			return 0;
+		}
+
+	}
+}
+
+--------------------------------------------------------------------
+Not:yüz göz bulma ???????????????
+--------------------------------------------------------------------
+
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+using namespace cv;
+
+void goruntuAnalizi(Mat frame);
+
+//Global değişkenler
+String yuzXml = "haarcascade_frontalface_alt.xml";
+String gozlerXml = "haarcascade_eye_tree_eyeglasses.xml";
+CascadeClassifier yuzSiniflandirici;
+CascadeClassifier gozSiniflandirici;
+string pencereAdi = "Yuz ve Goz Tanima";
+RNG rng(12345);
+
+int main(int argc, const char** argv)
+{
+	Mat frame;
+
+	//xml dosyaları yükleniyor
+	if (!yuzSiniflandirici.load(yuzXml)) { printf("--(!)xml dosyasi yuklenemedi\n"); return -1; };
+	if (!gozSiniflandirici.load(gozlerXml)) { printf("--(!)xml dosyasi yuklenemedi\n"); return -1; };
+
+	//!!!Dahili webcam kullanılıyorsa burası 0 olmalı
+	VideoCapture capture(0);
+
+	if (capture.isOpened())
+	{
+		while (true)
+		{
+			capture.read(frame);
+
+			//Eğer frame varsa işleme başla
+			//Webcam olduğu için frame olmaması imkansız:)
+			//Burası videolar için böyle bırakıldı
+			//Videoların sonu vardır çünkü:)
+			//Frame'ler bir yere gelince biter:)
+			if (!frame.empty())
+			{
+				goruntuAnalizi(frame);
+			}
+			else
+			{
+				printf("Okunacak frame kalmadi"); break;
+			}
+
+			if (waitKey(30) == 27) //27 ascii tus karsiligi ESC tusudur.
+			{
+				cout << "Esc ile cikis yapildi" << endl;
+				destroyAllWindows(); //pecere kapandı
+				system("pause");
+				return 0;
+			}
+		}
+	}
+	return 0;//goruntu yoksa programı bitir
+}
+
+void goruntuAnalizi(Mat frame)
+{
+	std::vector<Rect> yuzler;
+	Mat griFrame;
+
+	cvtColor(frame, griFrame, CV_BGR2GRAY);
+	equalizeHist(griFrame, griFrame);
+
+	//Yüz algılanıyor
+	yuzSiniflandirici.detectMultiScale(griFrame, yuzler, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+
+	for (size_t i = 0; i < yuzler.size(); i++)
+	{
+		Point center(yuzler[i].x + yuzler[i].width*0.5, yuzler[i].y + yuzler[i].height*0.5);
+		ellipse(frame, center, Size(yuzler[i].width*0.5, yuzler[i].height*0.5), 0, 0, 360, Scalar(255, 0, 255), 4, 8, 0);
+
+		Mat bulunanYuz = griFrame(yuzler[i]);
+		std::vector<Rect> gozler;
+
+		//Yüzün içindeki gözleri algılanıyor
+		gozSiniflandirici.detectMultiScale(bulunanYuz, gozler, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
+
+		for (size_t j = 0; j < gozler.size(); j++)
+		{
+			Point center(yuzler[i].x + gozler[j].x + gozler[j].width*0.5, yuzler[i].y + gozler[j].y + gozler[j].height*0.5);
+			int radius = cvRound((gozler[j].width + gozler[j].height)*0.25);
+			circle(frame, center, radius, Scalar(255, 0, 0), 4, 8, 0);
+		}
+	}
+	//Değişiklikleri form'da göster
+	imshow(pencereAdi, frame);
+}
+
+
+--------------------------------------------------------------------
+Not:yüz bulmak
+--------------------------------------------------------------------
+#include "opencv2/objdetect/objdetect.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp" 
+#include "iostream"
+#include "stdio.h"
+
+using namespace std;
+using namespace cv;
+int main(int argc, const char** argv)
+{
+	Mat Resim = imread("resim.jpg");
+	if (Resim.empty())
+	{
+		cout << "Resim acilamadi" << endl;
+	}
+	else
+	{
+		CascadeClassifier nesne;
+		nesne.load("haarcascade_frontalface_default.xml");
+
+		Mat griResim;
+		namedWindow("Resimden Yuz Tanima", CV_WINDOW_AUTOSIZE); //deneme isimli windows penceresi oluştu
+
+		cvtColor(Resim, griResim, CV_BGR2GRAY);  //resmi gri yapar
+
+		vector<Rect> nesneVektoru;
+		nesne.detectMultiScale(griResim, nesneVektoru, 1.1, 3, 0, Size(30, 30));
+		for (int i = 0; i<nesneVektoru.size(); i++)
+		{
+			Point pt1(nesneVektoru[i].x + nesneVektoru[i].width, nesneVektoru[i].y + nesneVektoru[i].height);
+			Point pt2(nesneVektoru[i].x, nesneVektoru[i].y);
+			rectangle(Resim, pt1, pt2, cvScalar(0, 255, 0, 0), 2, 8, 0);
+		}
+		imshow("Resimden Yuz Tanima", Resim);
+	}
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+Not:fareyle dikdörtgen çizmek
+--------------------------------------------------------------------
+#include "opencv2/highgui/highgui.hpp"
+#include "iostream" //cout için gerekli
+#include <opencv2/imgproc/imgproc.hpp>  //rectangle fonksiyonu için
+
+using namespace std;
+using namespace cv;
+
+Mat resim;
+
+Point ilkKoordinat;
+Point sonKoordinat;
+
+void fareTakip(int event, int x, int y, int flags, void *kullanici)
+{
+	//farenin sol tuşuna basınca
+	if (event == EVENT_LBUTTONDOWN)
+	{
+		ilkKoordinat.x = x;
+		ilkKoordinat.y = y;
+	}
+
+	//farenin sol tuşana basarak sürükleyince
+	if (flags == EVENT_FLAG_LBUTTON && event == EVENT_MOUSEMOVE)
+	{
+		//burada geçici bir görüntü gösteriliyor
+		//gerçek görüntü sol fareyi bırakınca çiziliyor
+		sonKoordinat.x = x;
+		sonKoordinat.y = y;
+		Mat arkaPlan = Mat::zeros(resim.size(), CV_8UC3); //zeros yani 0(siyah renk demek) lar matrisi olusturuldu
+		rectangle(arkaPlan, Point(ilkKoordinat.x, ilkKoordinat.y), Point(sonKoordinat.x, sonKoordinat.y), Scalar(255, 191, 0), 4, 8, 0);
+		arkaPlan = arkaPlan + resim;
+		imshow("Dikdörtgen Çizme", arkaPlan);
+	}
+
+	//farenin sol tuşunu bırakınca
+	if (event == EVENT_LBUTTONUP)
+	{
+		try {
+			//aynı noktaya tıklayıp bırakınca Dikdörtgen çizmiyor
+			if (!(ilkKoordinat.x == sonKoordinat.x && ilkKoordinat.y == sonKoordinat.y))
+			{
+				// dikdörtgen çizilirken siyah arkaplan oluşturmak için kullanılıyor
+				Mat arkaPlan = Mat::zeros(resim.size(), CV_8UC3);
+				rectangle(resim, Point(ilkKoordinat.x, ilkKoordinat.y), Point(sonKoordinat.x, sonKoordinat.y), Scalar(255, 191, 0), 4, 8, 0);
+				imshow("Dikdörtgen Çizme", resim);
+			}
+		}
+		catch (...)
+		{
+			system("cls");
+			cout << "<-----------------Hata olustu.----------------->" << endl;
+			cout << "<----------Pencerenin disina cikildi.---------->" << endl << endl;
+		}
+	}
+}
+
+int main()
+{
+	resim = imread("resim.jpg", CV_LOAD_IMAGE_COLOR);
+	if (resim.empty())
+	{
+		cout << "Resim acilamadi" << endl;
+	}
+	else
+	{
+		namedWindow("Dikdörtgen Çizme", CV_WINDOW_AUTOSIZE);
+		imshow("Dikdörtgen Çizme", resim);
+
+		setMouseCallback("Dikdörtgen Çizme", fareTakip, NULL);
+
+		waitKey(0); //bir tuşa basmayı bekliyor
+		destroyAllWindows();//pencereler kapandı
+	}
+	return 0;
+}
+--------------------------------------------------------------------
+Not:ekrandaki 1 noktanın değerinin görülmesi
+--------------------------------------------------------------------
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "iostream"
+
+using namespace cv;
+using namespace std;
+
+Mat resim;
+
+void renkCiz(int mavi, int yesil, int kirmizi)
+{
+	//8U nun anlamı 8 bit resim demektir
+	//C3 un anlamı 3 kanallı yani üç rengin karışımından resim oluştur demek
+	//bu renkler kirmizi, yesil ve mavidir
+	Mat img(200, 200, CV_8UC3, Scalar(mavi, yesil, kirmizi));
+	namedWindow("Piksel", CV_WINDOW_AUTOSIZE);
+	imshow("Piksel", img);
+}
+
+void fareTakip(int event, int x, int y, int flags, void *kullanici)
+{
+	//farenin sol tuşuna basarak sürüklendiğinde çizim yapıyor veya
+	//farenin sol tuşuna tıklandığında çizim yapıyor
+	if ((event == EVENT_MOUSEMOVE && flags == EVENT_FLAG_LBUTTON) || event == EVENT_LBUTTONDOWN)
+	{
+		try {
+			system("cls");
+			cout << "<-----------------Renkli Resim----------------->" << endl;
+			cout << "<----------------Piksel Bilgisi---------------->" << endl;
+
+			Vec3b yogunluk = resim.at<Vec3b>(y, x);
+			int mavi = yogunluk.val[0];
+			int yesil = yogunluk.val[1];
+			int kirmizi = yogunluk.val[2];
+
+			renkCiz(mavi, yesil, kirmizi);
+
+			cout << endl;
+			cout << "     " << "Koordinat  x   = " << x << endl;
+			cout << "     " << "Koordinat  y   = " << y << endl << endl << endl;
+
+			cout << "     " << "Mavi  Ton   Degeri = " << mavi << endl;
+			cout << "     " << "Yesil  Ton  Degeri = " << yesil << endl;
+			cout << "     " << "Kirmizi Ton Degeri = " << kirmizi << endl << endl << endl;
+
+			cout << "     " << "BGR = ( " << mavi << " , " << yesil << " , " << kirmizi << " )" << endl;
+			cout << "     " << "RGB = ( " << kirmizi << " , " << yesil << " , " << mavi << " )" << endl << endl << endl;
+
+			cout << "Not1: BGR >> Blue , Green , Red" << endl;
+			cout << "Not2: RGB >> Red  , Green , Blue" << endl;
+			cout << "Not3: Renkli resimler kirmizi, yesil ve mavi renklerin karisimiyla olusur." << endl;
+			cout << "Not4: Bu karisimda degeri 0 a yakin olan renkler daha pasiftir." << endl;
+			cout << "Not5: degeri 255 e yakin olan renkler daha baskindir.";
+		}
+		catch (...)
+		{
+			system("cls");
+			cout << "<-----------------Hata olustu.----------------->" << endl;
+			cout << "<----------Pencerenin disina cikildi.---------->" << endl << endl;
+		}
+	}
+}
+
+int main()
+{
+	namedWindow("Kamera", CV_WINDOW_AUTOSIZE);
+
+	VideoCapture video(0); //dahili webcam icin 0 yaziniz harici webcamlar icin 1,2,3 gibi sayilar yaziniz
+	if (!video.isOpened())//eğer webcam açılmazsa
+	{
+		cout << "Webcam acilamadi" << endl;
+	}
+
+	while (true) //sonsuz dongu
+	{
+		bool frameOkundu = video.read(resim); //video'yu resim'e frame frame okuyor
+
+		imshow("Kamera", resim);
+
+		//fare hareketleri burada takip ediliyor
+		setMouseCallback("Kamera", fareTakip, NULL);
+
+		if (waitKey(30) == 27) //27 ascii tus karsiligi ESC tusudur. 30 milisaniye ESC'ye basilirsa
+		{
+			return 0;
+		}
+	}
+
+	waitKey(0);
+	return 0;
+}
+--------------------------------------------------------------------
+Not:resim üzerine yazı yazmak
+--------------------------------------------------------------------
+#include <iostream>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <cstdlib>
+
+using namespace std;
+using namespace cv;
+
+cv::Mat resim = cv::imread("resim.jpg");
+int cizgiKalinligi = 4;
+
+void ciz(int y, int x)
+{
+	resim.at<cv::Vec3b>(x, y)[0] = 0; //mavi
+	resim.at<cv::Vec3b>(x, y)[1] = 0; //yeşil
+	resim.at<cv::Vec3b>(x, y)[2] = 255; //kırmızı
+	cv::imshow("Kare", resim);
+}
+void fareTakip(int event, int x, int y, int flags, void *kullanici)
+{
+	//farenin sol tuşuna basarak sürüklendiğinde çizim yapıyor veya
+	//farenin sol tuşuna tıklandığında çizim yapıyor
+	if ((event == EVENT_MOUSEMOVE && flags == EVENT_FLAG_LBUTTON) || event == EVENT_LBUTTONDOWN)
+	{
+		//tek piksele çizim yapınca görünmesi zor oluyor ve
+		//bazı pikselleri işaretlenmiyordu
+		//aşağıdaki döngülerle komşu piksellerde boyanıyor
+		for (int i = -cizgiKalinligi; i <= cizgiKalinligi; i++)
+		{
+			for (int j = -cizgiKalinligi; j <= cizgiKalinligi; j++)
+			{
+				ciz(x + j, y + i);
+			}
+		}
+	}
+
+}
+
+int main() {
+	cv::namedWindow("Kare");
+	setMouseCallback("Kare", fareTakip, NULL);
+	cv::imshow("Kare", resim);
+	cv::waitKey();
+	return 0;
+}
+--------------------------------------------------------------------
+Not:resim piksel değiştirme
+--------------------------------------------------------------------
+#include <iostream>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <cstdlib>
+
+int main() {
+	cv::Mat resim = cv::imread("resim.jpg");
+	for (int x = 0; x < 200; x++)
+	{
+		for (int y = 0; y <200; y++) { //BGR >> Blue Green Red >> Mavi Yeşil Kırmızı
+									   //OpenCV de BGR kodları kullanıldığı için sıra şöyle olmalı
+			resim.at<cv::Vec3b>(x, y)[0] = 0; //mavi
+			resim.at<cv::Vec3b>(x, y)[1] = 0; //yeşil
+			resim.at<cv::Vec3b>(x, y)[2] = 255; //kırmızı
+
+												//gri resim tek kanallı olduğu için
+												//eğer resim gri olsaydı
+												//renk atamaları aşağıdaki şekilde yapılmalıydı
+												//resim.at<unsigned char>(x, y) = renk;
+		}
+	}
+	cv::namedWindow("Kare");
+	cv::imshow("Kare", resim);
+	cv::waitKey();
+	return 0;
+}
+--------------------------------------------------------------------
+Not:video üzerinde nokta takibi
+--------------------------------------------------------------------
+#include <opencv2\opencv.hpp>
+#include "iostream"
+
+using namespace std;
+using namespace cv;
+
+//takip edilecek pikselin koordinatları
+int x = 320;
+int y = 240;
+
+int main()
+{
+	//0. kamera yani dahili kamera seçildi
+	VideoCapture kamera(0);
+
+	//eğer kamera açılmazsa
+	if (!kamera.isOpened())
+	{
+		cout << "webcam bulunamadi" << endl;
+		system("Pause");
+		return -1;
+	}
+
+	Mat yeni, eski;
+	Mat goruntu; //kameranın anlık görüntüsü bu değişkene atanacak
+
+	vector<Point2f> oncekiNokta, sonrakiNokta; //önceki ve sonraki noktalar
+	vector<uchar> durum; //nokta var mı yok mu
+	vector<float> hata; //hesaplama hatası
+
+	oncekiNokta.push_back(Point(x, y)); //önceki noktanın yeri
+
+	kamera >> goruntu; //görüntü kameradan frame frame alınıyor
+	cvtColor(goruntu, yeni, CV_BGR2GRAY); //kameradan alınan görüntü gri formata dönüştürüldü
+
+	while (true)
+	{
+		eski = yeni.clone(); //aynı özelliklere sahip resim kopyalandı 
+		kamera >> goruntu; //görüntü kameradan frame frame alınıyor
+		cvtColor(goruntu, yeni, CV_BGR2GRAY); //kameradan alınan görüntü gri formata dönüştürüldü
+		calcOpticalFlowPyrLK(eski, yeni, oncekiNokta, sonrakiNokta, durum, hata); //eski resimdeki noktayı yeni resimde arar
+
+																				  //takip edilen nokta yerine beyaz piksel koyuyor
+		line(goruntu, sonrakiNokta[0], sonrakiNokta[0], Scalar(0, 0, 255), 3, 8, 0);
+		imshow("Nokta Takibi", goruntu);
+		oncekiNokta[0] = sonrakiNokta[0]; //sonraki bulunan noktayı önceki nokta yapar.
+
+		if (durum[0] == 1)
+		{
+			cout << "nokta bulundu" << endl;
+		}
+		else
+			cout << "nokta kayboldu" << endl;
+
+		if (waitKey(30) == 27)
+		{
+			break;
+		}
+	}
+	return 0;
+}
+

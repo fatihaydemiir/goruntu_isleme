@@ -1,0 +1,1508 @@
+import cv2
+import numpy as np
+
+
+resim2=cv2.imread("indir_gri.jpg")
+resim=cv2.imread("indir.jpg",0)  #burada 0 siyah beyaz yapıyor resmive okuduk resmi
+
+
+
+cv2.imwrite("indir_gri.jpg",resim)  # siyah beyaz resmi kaydettik
+
+print(type(resim))
+
+cv2.imshow("ders_1 resmi",resim) # resmin ekranda gösterilebilmesi için
+cv2.imshow("ders_1_resmi",resim2)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()# ekrarnın kapatılabilmesi için
+
+
+
+import cv2
+import numpy as np
+
+
+resim=cv2.imread("indir.jpg",0)  #burada 0 siyah beyaz yapıyor resmi  ve okuduk resmi
+print(resim)
+print(resim.size) # resmin kaç piksel oldugunu görüyorum
+print(resim.dtype) # resim neyden oluşuyor units8
+cv2.imwrite("indir_gri.jpg",resim)  # siyah beyaz resmi kaydettik
+
+print(type(resim))   #resimtipini gördük
+print(resim.item(100,100),0) # siyah bu noktadaki pikselin içerdidi rengin kodunu veriyor
+print(resim.item(100,100),1) # red
+print(resim.item(100,100),2) #blue
+
+print(resim.shape) # resimin genişlik,yükseklik,kaç resnkten oluştugunu gösteriyor
+cv2.imshow("ders_1 resmi",resim) # resmin ekranda gösterilebilmesi için
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()# ekrarnın kapatılab
+
+#0->siyah
+#255->beyaz
+
+
+
+
+
+resimin bir bölgesini almak
+import cv2
+import numpy as np
+
+resim=cv2.imread("resim.jpg")
+bolge=resim[100:300,200:400]
+#resim[50,50]=[255,255,255] #bu bikseli beyaz yapıyor.
+""""
+
+for i in range(200):
+    resim[50,i]=[255,255,255]  #resimin belli bir matrisini beyaz yaptı
+"""
+"""
+#resimin bir bölgesini almak
+bolge=resim[100:300,200:400]
+cv2.imshow("bolgeli hali:",bolge)
+cv2.imshow("resimin gösterilimesi",resim)
+"""
+"""
+#resimin bir bölümünü baska bir bölümle degistirme
+resim[0:200,0:200]=bolge
+resim[0:200,200:400]=bolge
+"""
+
+#bellibir bölümü kırmızı yaptık
+for i in  resim:
+    resim[60,i]=[100,4,200]
+
+
+cv2.imshow("bolgeli hali:",bolge)
+cv2.imshow("resimin gösterilimesi",resim)
+
+
+
+
+
+print(resim[50,50]) #bu pikseldeki resmin degeri
+print("resimin boyutu: "+str(resim.size))
+print("resimin ozelligi: "+str(resim.shape))
+print("resimin bit degeri: "+str(resim.dtype))
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+rESMİ AYIRMA BİRLEŞTİRME MERGE
+import cv2
+import numpy as np
+
+resim=cv2.imread("resim.jpg")
+
+print(cv2.split(resim)) #resimin piksellerini 3 parçaya böldü blue,green,red
+
+b,g,r =cv2.split(resim)
+
+yeni_resim=cv2.merge((b,g,r))  # yeni renklerine ayrılmış resim
+"""
+resim[:,:,0]=255 #bütün resmi mavi tonla yaptık
+resim[:,:,1]=255#bütün resimi yesil tonla yapıyor
+resim[:,:,2]=255#bütün resimi kırmızı tonla yapıyor
+"""
+resim[100:200,100:200,0]=255#sadece belli bir bölümü mavi yapıyoruz
+
+cv2.imshow("gösterilecek orjinal resim:",resim)
+cv2.imshow("birlestirdigiimiz(mege) edilmiş resim",yeni_resim)
+
+"""
+
+cv2.imshow("gösterilecek blue resim:",b)
+cv2.imshow("gösterilecek green resim:",g)
+cv2.imshow("gösterilecek red resim:",r)
+"""
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+RESİM UzATMA ,AYNALAMA VS
+import cv2
+import numpy as np
+resim=cv2.imread("resim.jpg")
+
+#resmi uzatma
+uzatılan_resim=cv2.copyMakeBorder(resim,100,100,100,100,cv2.BORDER_REPLICATE)
+
+#resmiaynalama
+aynalanan_resim=cv2.copyMakeBorder(resim,100,100,100,100,cv2.BORDER_REFLECT)
+#resmi tekrar etme
+tekrareden_resim=cv2.copyMakeBorder(resim,100,100,100,100,cv2.BORDER_WRAP)
+#resmin etrafını sarma
+sarilan_resim=cv2.copyMakeBorder(resim,100,100,100,100,cv2.BORDER_CONSTANT,value= [255,0,0]) #sondakivalue ile sarilan boşlugu mavi yapabiliyorum
+
+print(resim.shape)  #yükseklik,genişlik,renk sayısı
+
+cv2.imshow("resim",resim)
+cv2.imshow("resimuzatma",uzatılan_resim)
+cv2.imshow("resimaynalama",aynalanan_resim)
+cv2.imshow("resimtekrar",tekrareden_resim)
+cv2.imshow("resimsarilan",sarilan_resim)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+KARE İÇİNE ALMA
+import cv2
+import numpy as np
+resim=cv2.imread("resim.jpg")
+
+
+cv2.rectangle(resim,(50,200),(150,20),[0,0,255],2) # (işlem yapılan kısmın isimi,(x,y),(x,y),[ne renkle çizilecek],kalınlıgı
+
+cv2.imshow("resim",resim)
+
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+Çalışmadı bu toplama video izleyip geçtim
+import cv2
+import numpy as np
+
+def main():
+    resim1 =cv2.imread("x.jpg")
+    resim2 =cv2.imread("y.jpg")
+    bolge1 =resim1[0:100,50:100]
+    bolge2 =resim2[0:100,50:100]
+    """
+    print("on yuz resim degerleri yukseklik:{}, genislik {} ,kanal sayısı:{}".format(resim1.shape[0],resim1.shape[1],resim1.shape[2]))
+    print("arka yuz resim degerleri yukseklik:{}, genislik {} ,kanal sayısı:{}".format(resim2.shape[0],resim2.shape[1],resim2.shape[2]))
+    """
+
+    print(resim1[100,100]) #resimdeki 1 noktanın adresini görücez ve toplıycaz alttakinin adrrsiyle
+    print(resim2[100,100])
+    print(resim1[100,100] +resim2[100,100]) #terminalde bu ikisini nasıl topladıgını görebilirsin
+    print(cv2.add(bolge1[0,50],bolge2[0,50])) # bu şekilde yaparsak alt alta göstererekmaksimum doyuma ulaştıgında 255 yazıyor
+    cv2.imshow("x.jpg",bolge1)
+    cv2.imshow("y.jpg",bolge2)
+    #toplam =cv2.add(bolge1+bolge2)
+    #cv2.imshow("toplam",toplam)
+
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+        main()
+
+
+
+#resmin belirli bir bölgesine başka bir resim eklemek
+#KULLANILABİLİR
+a_gri=cv2.cvtColor(dosyaismi,cv2.COLOR_BGR2GRAY) #RESİMİ GREYE DÖNÜŞTÜRÜYOR
+YUKSEKLİK,GENİSLİK,KANAL=2.dosyaismi.shape #dosyanın şekil özelligini veriyor
+roı=#resimdekiherhangibir bölge demek
+öreneğin
+ROI=1dosyaisimi[0:yükseklik,0:genislik] şekilinde
+
+ret,mask=cv2.threshold(yerine yerlestirecegimiz dosya isimi,10,255,cv2.THRESH_BINARY) # 10 degerininin üzerini ben 255 yapıyorum burada dk 12.00(2 degişken bu şkilde atanabiliyo)(resimi siyah beyaz yapabiliriz)
+mask_inver =cv2.bitwise_not(mask) #resimin tersini almak (bitlerin tersini alıyor)
+1.resimim=cv2.bitwise_and(ROI,ROI,mask=mask_inver) # resimi diger resimin üzerine taşıyor
+ toplam=cv2.add(feyyazarka,android)# 2 resmi topluyorum siyahlar etkisiz oldugundan yeşil olan kısım gözükecek
+
+feyyaz_yigit[0:yukseklik,0:genislik] toplam #renkli kısmı baska resmin üzerine ekledik
+
+iki_kat=cv2.pyrUp(resim)#resimi 2 katına çıkartıyorum (büyütüyorum)
+iki_kat=cv2.pyrDown(resim)#resimin boyutunu  küçültme
+resim=np.zeros((400,400,3),dtype="uint8") #400 e400 matrisoluştur her birinde 3 yapıtutuyor en son typ ile 0a 255tam sayı degerlerini tut dedik
+np.zeros =tüm degerlere 0 yerleştiriyor belirtilen matriste
+
+# resimüzerine daire çizgi yazı yazma
+resim=np.zeros((400,400,3),dtype="uint8") #400 e400 matrisoluştur her birinde 3 yapıtutuyor en son typ ile 0a 255tam sayı degerlerini tut dedik
+resim.fill(255) #dk5 resimi full beyaz yapıyor arka planı
+cv2.line(resim isimi,(0:0),(200:00),(255,0,0),2) #dk7 başlangıçtan ortaya çizgi çektik
+not:orta nokta 400 e 400ise 200e200dür
+cv2.circle(resim(200,200),50,(0,255,0)2)# resimin ortasına daire çiziyoruz yarıçapı 50
+cv2.putText(resim,"yazilacakyazi",(100,100),cv2.FONT_HERSHEY_PLAIN,2,(0,0,255),2) #yazi yazma
+
+cv2.rectangle(resim,(150,150),(250,150),(150,150,150),2) #daire cizme
+
+
+
+
+
+
+
+
+
+
+Ders10
+#kameradan görüntü alma
+#kameradan görüntü alma
+
+import cv2
+import numpy as np
+
+
+#0== bilgisayara tanımlı olan kamerayı kullanacak
+#1 == usb ye baglı olan kamerayı kullanacak
+#VİDEO ADRESİ == kayıtlı videoyu kullanıyor
+
+kamera=cv2.VideoCapture(0)
+
+while True:
+    ret,kare =kamera.read()
+    print(kare)
+    bolge=kare[200:300,200:300] # belli birbölgeyi alıp 2. Ekranda gösterdim
+    cv2.rectangle(kare,(100,200),(200,100),(255,255,255),2)  #videonun içinde belirli bir bölgede kare çizme
+
+    cv2.imshow("video",kare)
+    cv2.imshow("bolge", bolge)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+      break
+
+kamera.relaese()
+cv2.destroyAllWindows()
+
+Ders11
+#kamera boyutlandırma
+kamera.set(3,200)
+kamera.set(4,200)
+
+#piksel büyütme
+def ayarlama(kare,yuzde=75)
+    genislik=int(kare.shape[1]*yuzde/100) #belirtilenin 100 de 75 ini ladık
+    yukseklik=int(kare.shape[0]*yuzde/100) #yuksekligide yuzde 75 olarak ayarladı
+    boyut=(genislik,yukseklik)
+    return cv2.resize(kare,boyut,interpolation=cv2.INTER_AREA)#fonksiyonu kare biçiminde döndürüyor
+
+griton=cv2.cvtColor(kare,cv2.COLOR_BGR2GRAY)#resmi griye döndürüyor
+
+
+
+
+
+
+
+Ders 12
+#Python OpenCV - 12 - Video Kaydetme ve Döndürme
+#ret =devamlılık parametresi
+import cv2
+import numpy as np
+def main():
+    kamera=cv2.VideoCapture(0)
+
+    fourcc= cv2.VideoWriter_fourcc(*"XVID") #format belirleme
+    kayit= cv2.VideoWriter("kayit.avi",fourcc,30,(640,480)) #kayıt etme
+    while True:
+        ret,goruntu=kamera.read()
+        ters_goruntu =cv2.flip(goruntu) #goruntuyu ters alma ortaya yazmadım kaydetmesini vs istemedim
+        if ret==True:
+            kayit.write(goruntu)
+
+        cv2.imshow("goruntu",goruntu)
+        cv2.imshow("ters goruntu",ters_goruntu) #görünttününters hali
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
+    kamera.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
+
+HUE İŞLEMİ KULLANILABİLİR
+#Python OpenCV - 13 - Renkleri Ayırt Etmek(Renk Filtreleme) HSV
+#ret=true yada false degeri alıyor
+
+import cv2
+import numpy as np
+kamera =cv2.VideoCapture(0)
+
+dusuk=np.array([90,50,50]) #mavi degerini bulma
+yuksek=np.array([130,255,255])
+
+
+while True:
+    ret,goruntu=kamera.read()
+
+    hsv=cv2.cvtColor(goruntu,cv2.COLOR_BGR2HSV) #görüntümüüzü hsv uzayına döndürdük
+
+
+    cv2.imshow("anagoruntu(BLUE , GREEN RED,",goruntu)
+    cv2.imshow("hsv HUE,STRATION,VALUE goruntusu",hsv)
+
+    if cv2.waitKey(25) & 0xFF ==ord ('q'):
+        break
+
+kamera.release()
+cv2.destroyAllWindows()
+
+
+KESİN DENE DERS 13 *****
+#Python OpenCV - 13 - Renkleri Ayırt Etmek(Renk Filtreleme) HSV
+#ret=true yada false degeri alıyor
+
+#mavi filtreleme işlemi yaptık
+
+import cv2
+import numpy as np
+kamera =cv2.VideoCapture(0)
+
+dusuk=np.array([90,50,50]) #mavi degerini bulma
+yuksek=np.array([130,255,255])
+
+
+while True:
+    ret,goruntu=kamera.read()
+
+    hsv=cv2.cvtColor(goruntu,cv2.COLOR_BGR2HSV) #görüntümüüzü hsv uzayına döndürdük
+
+    mask =cv2.inRange(hsv,dusuk,yuksek)
+
+    son_resim = cv2.bitwise_and(goruntu,goruntu, mask=mask)
+
+
+    cv2.imshow("anagoruntu(BLUE , GREEN RED,",goruntu)
+    cv2.imshow("hsv HUE,STRATION,VALUE goruntusu",hsv)
+    cv2.imshow("mask",mask)  #cok önemli kullanılabilir burada maviyi esas aldık
+    cv2.imshow("renk algılama",son_resim)
+
+
+    if cv2.waitKey(25) & 0xFF ==ord ('q'):
+        break
+
+kamera.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+GÜRÜLTÜ AZALTMA
+#ders 13 te alınan görüntünün iyileştirilmesi (blurlama ve yumuşatma(smoothed) işlemi)
+#Python OpenCV - 14 - Renk Filtreleme Çeşitleri(Renk Filtreleme) HSV
+#ret=true yada false degeri alıyor
+
+#mavi filtreleme işlemi yaptık
+
+import cv2
+import numpy as np
+kamera =cv2.VideoCapture(0)
+
+dusuk=np.array([20,50,50]) #mavi degerini bulma (bunlar ile oynayarak rengi ayarlamaya çalış)
+yuksek=np.array([37,255,255])
+
+
+while True:
+    ret,goruntu=kamera.read()
+
+    hsv=cv2.cvtColor(goruntu,cv2.COLOR_BGR2HSV) #görüntümüüzü hsv uzayına döndürdük
+
+    mask =cv2.inRange(hsv,dusuk,yuksek)
+
+    son_resim = cv2.bitwise_and(goruntu,goruntu, mask=mask)
+
+    #smoothed
+
+    kernel=np.ones((15,15),dtype=np.float32) / 225
+    smoothed =cv2.filter2D(son_resim,-1,kernel) # bu kısım genelde sabittir
+
+    #bulurlama
+
+    blur=cv2.GaussianBlur(son_resim,(15,15),0)
+
+    #median (gürültüyü epeyi bir engelliyor)
+    median=cv2.medianBlur(son_resim,15)
+
+    #bilateral   ****
+
+    bilateral=cv2.bilateralFilter(son_resim,15,75,75)#bunlar kalıplaşmış kullanımlar
+
+    cv2.imshow("anagoruntu(BLUE , GREEN RED),",goruntu)
+    cv2.imshow("hsv HUE,STRATION,VALUE goruntusu",hsv)
+    #cv2.imshow("mask",mask)  #cok önemli kullanılabilir burada maviyi esas aldık
+    #cv2.imshow("renk algılama",son_resim)
+    cv2.imshow("smoothed",smoothed)
+    cv2.imshow("blurlanmıs", blur)
+    cv2.imshow("median", median)
+    cv2.imshow("bilateral", bilateral)
+
+    if cv2.waitKey(25) & 0xFF ==ord ('q'):
+        break
+print(kernel)
+kamera.release()
+cv2.destroyAllWindows()
+#Python OpenCV - 15 - Morfolojik Filteleme
+#mavi filtreleme işlemi yaptık ****
+
+import cv2
+import numpy as np
+kamera =cv2.VideoCapture(0)
+
+dusuk=np.array([90,50,50]) #mavi degerini bulma
+yuksek=np.array([130,255,255])
+
+
+while True:
+    ret,goruntu=kamera.read()
+
+    hsv=cv2.cvtColor(goruntu,cv2.COLOR_BGR2HSV) #görüntümüüzü hsv uzayına döndürdük
+
+    mask =cv2.inRange(hsv,dusuk,yuksek)
+
+    son_resim = cv2.bitwise_and(goruntu,goruntu, mask=mask)
+
+    # ders 15 ********için
+    kernel = np.ones((5,5),np.uint8) #5e 5 i arttırdıkçe maskeyi yok ediyor bidigin
+    erosion = cv2.erode(mask,kernel,iterations= 1) # siyah alanı silmeye çalışıyor
+    diolation = cv2.dilate(mask,kernel,iterations= 1) #beyaz alanı arttırmaya çalışıyor
+    opening =cv2.morphologyEx(mask,cv2.MORPH_OPEN,kernel)#yazımızı göstermeye çalışıyor
+    closing =cv2.morphologyEx(mask,cv2.MORPH_CLOSE,kernel) #kusur kapatıyorrenk farklarını benzetiyor
+    # ders 15 kısım son
+    cv2.imshow("mask",mask)  #cok önemli kullanılabilir burada maviyi esas aldık
+    cv2.imshow("renk algılama",son_resim)
+    cv2.imshow("erosion", erosion)
+    cv2.imshow("diolation", diolation)
+    cv2.imshow("opening", opening)
+    cv2.imshow("closing", closing)
+
+
+    if cv2.waitKey(25) & 0xFF ==ord ('q'):
+        break
+
+kamera.release()
+cv2.destroyAllWindows()
+
+3. Opening
+Opening is just another name of erosion followed by dilation. 
+4. Closing
+Closing is reverse of Opening, Dilation followed by Erosion. 
+
+
+
+
+
+
+
+
+
+#Python OpenCV - 16 - Kamera Üzerinden Nesne Tespiti
+import cv2
+import numpy as np
+
+kamera=cv2.VideoCapture(0)
+
+while True:
+    ret,kare =kamera.read()
+
+    gri_kare=cv2.cvtColor(kare,cv2.COLOR_BGR2GRAY)
+    nesne=cv2.imread("kalem.jpg",0)
+
+    w,h=nesne.shape #(w=genişlik,h=yukseklik)
+
+    res=cv2.matchTemplate(gri_kare,nesne,cv2.TM_CCOEFF_NORMED)# karemizde tarama yapıyor
+    esig_degeri=0.6 # algılayamazsan eşik degeriyle oyna
+    loc = np.where(res>esig_degeri)
+
+
+
+    for n in zip(*loc[::-1]):
+        cv2.rectangle(kare,n,(n[0]+h,n[1]+w),(0,255,0),2)
+
+
+    cv2.imshow("ekran",kare)
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
+
+kamera.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Python OpenCV - 16 - Kamera Üzerinden Nesne Tespiti yazida yazdık yanına
+import cv2
+import numpy as np
+
+kamera=cv2.VideoCapture(0)
+
+while True:
+    ret,kare =kamera.read()
+
+    gri_kare=cv2.cvtColor(kare,cv2.COLOR_BGR2GRAY)
+    nesne=cv2.imread("kalem.jpg",0)
+
+    w,h=nesne.shape #(w=genişlik,h=yukseklik)
+
+    res=cv2.matchTemplate(gri_kare,nesne,cv2.TM_CCOEFF_NORMED)# karemizde tarama yapıyor
+    esig_degeri=0.5 # algılayamazsan eşik degeriyle oyna
+    loc = np.where(res>esig_degeri)
+
+
+
+    for n in zip(*loc[::-1]):
+        cv2.rectangle(kare,n,(n[0]+h,n[1]+w),(0,255,0),2)
+        cv2.putText(kare,"yakisikli",(n[0]+10,n[1]+10),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,0),1) #yazi yazabiliyoruz algıladıgı yere
+
+
+    cv2.imshow("ekran",kare)
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
+
+kamera.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+# çizigi fltreleri
+
+import cv2
+import numpy as np
+resim=cv2.imread("resim.jpg")
+
+
+#laplacian çizgileri siyah beyaz şekilde ayırabiliyoruz
+laplacian =cv2.Laplacian(resim,cv2.CV_64F)
+
+#sobel=dikey
+
+sobel_dikey=cv2.Sobel(resim,cv2.CV_64F,1,0,ksize=5)  #sobel. şükela: tümü | bugün. sayısal sinyal işleme (dsp) işlemlerinde sıklıkla kullanılan bir kenar bulma algoritmasıdır.
+
+#sobel=yatay
+sobel_dikey=cv2.Sobel(resim,cv2.CV_64F,0,1,ksize=5)
+
+#canny
+kenarlar=cv2.Canny(resim,50,200)
+
+cv2.imshow("orjinal resim",resim)
+cv2.imshow("laplacian",laplacian)
+cv2.imshow("sobel",sobel_dikey)
+cv2.imshow("canny",kenarlar)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+#köşe bulma işlemi
+
+import cv2
+import numpy as np
+
+def main():
+    resim=cv2.imread("kose.jpg")
+    resim_gri = cv2.cvtColor(resim,cv2.COLOR_BGR2GRAY)
+    resim_gri = np.float32(resim_gri)
+
+    koseler = cv2.goodFeaturesToTrack(resim_gri,50,0.01,10)
+
+    koseler = np.int0(koseler)
+
+    for kose in koseler:
+        x,y=kose.ravel()
+        cv2.circle(resim,(x,y),3,(255,0,0),-1)
+
+    cv2.imshow("resim",resim)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+if __name__== " __main__":
+    main()
+
+#köşe bulma işlemi  çalışmadı!!!!
+
+#köşe bulma işlemi
+
+import cv2
+import numpy as np
+
+
+resim = cv2.imread("kose.jpg")
+resim_gri = cv2.cvtColor(resim,cv2.COLOR_BGR2GRAY)
+resim_gri = np.float32(resim_gri)
+
+koseler = cv2.goodFeaturesToTrack(resim_gri,50,0.01,5)
+
+koseler = np.int0(koseler) # int e dönüştürdük
+
+for kose in koseler:
+    x,y  = kose.ravel()
+    cv2.circle(resim,(x,y),3,(255,0,0),-1)
+
+cv2.imshow("resim",resim)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+#Python OpenCV - 20 - Haarcascade İnsan Yüz ve Göz Filtreleme
+
+import cv2
+import numpy as np
+
+kamera=cv2.VideoCapture(0)
+while True:
+    ret,kare=kamera.read()
+
+
+
+    yuz_casc=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+    # resim=cv2.imread("yuz.jpg")
+    gri_ton =cv2.cvtColor(kare,cv2.COLOR_BGR2GRAY)
+    yuzler=yuz_casc.detectMultiScale(gri_ton,1.1,4)
+
+    print(yuzler)
+    for (x,y,w,h) in yuzler:
+        cv2.rectangle(kare,(x,y),(x+w,y+h),(255,0,0),2)
+
+    cv2.imshow("resim",kare)
+
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        break
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+EKKKKK
+(ekran görüntüsü alma)
+import cv2
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+    cv2.imshow("Ekran_goruntusu",cv2.cvtColor(Ekran_Görüntüsü,cv2.COLOR_BGR2RGB))#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
++
++
+SİYAH BEYAZ MASKELEME İŞLEMİ
+import cv2
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+
+    cv2.imshow("ekran",cv2.cvtColor(Renk_filtresi_sonuc,cv2.COLOR_BGR2RGB))#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
++
++
+
+
+Siyah beyaz üzerinden renkortalamasını  gösterdim geri ykalan yerlerde bunu dönüştürmeden yaptığım yerde göstericem
+import cv2
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+    ortalama_x = 0 #beyaz ortalaması x teki
+    ortalama_y = 0 #beyaz ortalaması y deki
+    ortalama_t = 0#beyazları gördüğümüzde ortalamaya dahil edicez if içine girince t yi arttırıcaz
+
+
+    for x in range(Renk_filtresi_sonuc.shape[1]): # X=1 Y=0OLUYOR TÜMEKRANI ALIRKEN
+        for y in range(Renk_filtresi_sonuc.shape[0]):
+            if(Renk_filtresi_sonuc[y,x] ==255): #EGER BEYAZ EKRAN İSE DEDİK
+                ortalama_x += x
+                ortalama_y += y
+                ortalama_t += 1
+
+    ortalama_x /= ortalama_t #bunlar float
+    ortalama_y /= ortalama_t #burası float
+
+    ortalama_x = int(ortalama_x)
+    ortalama_y = int(ortalama_y)
+
+    cv2.circle(Renk_filtresi_sonuc,(ortalama_x,ortalama_y),7,(0,0,255),-1) #-1kalınlık amaçlı #burada kıısımlar intisteniyor!!!#ortasına nokta koyuyoruz
+
+
+
+    cv2.imshow("ekran",cv2.cvtColor(Renk_filtresi_sonuc,cv2.COLOR_BGR2RGB))#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
++
++
+
+
+Renkliekranda siyah beyazın ortalaması gösterimi
+import cv2
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+    ortalama_x = 0 #beyaz ortalaması x teki
+    ortalama_y = 0 #beyaz ortalaması y deki
+    ortalama_t = 0#beyazları gördüğümüzde ortalamaya dahil edicez if içine girince t yi arttırıcaz
+
+
+    for x in range(Renk_filtresi_sonuc.shape[1]): # X=1 Y=0OLUYOR TÜMEKRANI ALIRKEN
+        for y in range(Renk_filtresi_sonuc.shape[0]):
+            if(Renk_filtresi_sonuc[y,x] ==255): #EGER BEYAZ EKRAN İSE DEDİK
+                ortalama_x += x
+                ortalama_y += y
+                ortalama_t += 1
+
+    ortalama_x /= ortalama_t #bunlar float
+    ortalama_y /= ortalama_t #burası float
+
+    ortalama_x = int(ortalama_x)
+    ortalama_y = int(ortalama_y)
+
+    cv2.circle(Ekran_Görüntüsü,(ortalama_x,ortalama_y),7,(0,0,255),-1) #-1kalınlık amaçlı #burada kıısımlar intisteniyor!!!#ortasına nokta koyuyoruz
+
+
+
+    cv2.imshow("ekran",Ekran_Görüntüsü)#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
++
++
+
+BURADA KIRMIZI NOKTA İLE YATAY BİLEŞENDE BEYAZIN AĞIRLIKTA OLDUĞU KISIMA GİDEBİLİYOR.BUNA GÖREDE ALTTAKİNDEN SONRA SAĞA MI SOLA MI GİTMEMİZGEREKTİĞİNİ ANLIYCAZ.
+import cv2
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+#EKRAN
+ #EKRAN SON İŞLEMLERDEN SONRA YAVAŞLAMA BAŞLADI BUNU AZLATMAK İÇİN EKRANI BOYUTLANDIRIICAZ ORAN HESABIYAPARAK
+    r = 300.0 / Ekran_Görüntüsü.shape[1]   #300=genişliğiifade ediyor
+    dim = (300,int(Ekran_Görüntüsü.shape[0]*r))
+    Ekran_Görüntüsü = cv2.resize(Ekran_Görüntüsü, dim , interpolation=cv2.INTER_AREA)
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+    ortalama_x = 0 #beyaz ortalaması x teki
+    ortalama_y = 0 #beyaz ortalaması y deki
+    ortalama_t = 0#beyazları gördüğümüzde ortalamaya dahil edicez if içine girince t yi arttırıcaz
+
+
+    for x in range(Renk_filtresi_sonuc.shape[1]): # X=1 Y=0OLUYOR TÜMEKRANI ALIRKEN
+        for y in range(Renk_filtresi_sonuc.shape[0]):
+            if(Renk_filtresi_sonuc[y,x] ==255): #EGER BEYAZ EKRAN İSE DEDİK
+                ortalama_x += x
+                ortalama_y += y
+                ortalama_t += 1
+
+    ortalama_x /= ortalama_t #bunlar float
+    ortalama_y /= ortalama_t #burası float
+
+    ortalama_x = int(ortalama_x)
+    ortalama_y = int(ortalama_y)
+
+    cv2.circle(Ekran_Görüntüsü,(ortalama_x,ortalama_y),7,(0,0,255),-1) #-1kalınlık amaçlı #burada kıısımlar intisteniyor!!!#ortasına nokta koyuyoruz
+
+
+
+    cv2.imshow("ekran",Ekran_Görüntüsü)#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
+import cv2    #BURADA ORYA NOKTAYI BULDU BEYAZ AĞIRLIKLI YER İLE ALTTAKİNDEN SONRA KIYASLAMATA BAŞLIYCAZ
+import numpy as np
+from PIL import ImageGrab
+import time
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+#EKRAN
+ #EKRAN SON İŞLEMLERDEN SONRA YAVAŞLAMA BAŞLADI BUNU AZLATMAK İÇİN EKRANI BOYUTLANDIRIICAZ ORAN HESABIYAPARAK
+    r = 300.0 / Ekran_Görüntüsü.shape[1]   #300=genişliğii fade ediyor
+    dim = (300,int(Ekran_Görüntüsü.shape[0]*r))
+    Ekran_Görüntüsü = cv2.resize(Ekran_Görüntüsü, dim , interpolation=cv2.INTER_AREA)
+
+#MERKEZ NOKTAYI BULABİLNMEK  İÇİN HESAPLATIYORUZ
+    merkez_x = Ekran_Görüntüsü.shape[1]/2 # X İÇİN
+    merkez_x =int(merkez_x)
+    merkez_y = Ekran_Görüntüsü.shape[0] / 2 #  Y İÇİN
+    merkez_y = int(merkez_y)
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+    ortalama_x = 0 #beyaz ortalaması x teki
+    ortalama_y = 0 #beyaz ortalaması y deki
+    ortalama_t = 0#beyazları gördüğümüzde ortalamaya dahil edicez if içine girince t yi arttırıcaz
+
+    for x in range(Renk_filtresi_sonuc.shape[1]): # X=1 Y=0OLUYOR TÜMEKRANI ALIRKEN
+        for y in range(Renk_filtresi_sonuc.shape[0]):
+            if(Renk_filtresi_sonuc[y,x] ==255): #EGER BEYAZ EKRAN İSE DEDİK
+                ortalama_x += x
+                ortalama_y += y
+                ortalama_t += 1
+
+    ortalama_x /= ortalama_t #bunlar float
+    ortalama_y /= ortalama_t #burası float
+
+    ortalama_x = int(ortalama_x)
+    ortalama_y = int(ortalama_y)
+
+    cv2.circle(Ekran_Görüntüsü,(ortalama_x,ortalama_y),5,(0,0,255),-1) #-1kalınlık amaçlı #burada kıısımlar intisteniyor!!!#ortasına nokta koyuyoruz
+    cv2.circle(Ekran_Görüntüsü,(merkez_x,merkez_y),5,(255,0,0),-1 )
+
+    cv2.imshow("ekran",Ekran_Görüntüsü)#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
+import cv2              #YOL TAKİP SONNNNNNNNNN
+import numpy as np
+from PIL import ImageGrab
+import time
+from directkeys import ReleaseKey, PressKey, W, A, S, D # kütüphaneyi aynı dosya içerisinde yenipydosyası oluştırarak ekleyebilirsin !!!
+
+while(True): #sonsuz döngüde ekran görüntüsü gri olur.
+    PressKey(W)
+    Ekran_Görüntüsü = np.array(ImageGrab.grab(bbox=(0,40,760,640))) #sol üstteki nokta,sağ üstekinoktanın kordinatları,,grab=kapmak,,np.aray=resim olarak alğılamasını sağlıyor  #ekran görüntüsünü alıyo,,Burada BGR uzayında oluyor bunu rgb ye dönüştürürsem  asıl renginde gözükür
+#EKRAN
+ #EKRAN SON İŞLEMLERDEN SONRA YAVAŞLAMA BAŞLADI BUNU AZLATMAK İÇİN EKRANI BOYUTLANDIRIICAZ ORAN HESABIYAPARAK
+    r = 300.0 / Ekran_Görüntüsü.shape[1]   #300=genişliğii fade ediyor
+    dim = (300,int(Ekran_Görüntüsü.shape[0]*r))
+    Ekran_Görüntüsü = cv2.resize(Ekran_Görüntüsü, dim , interpolation=cv2.INTER_AREA)
+
+#MERKEZ NOKTAYI BULABİLNMEK  İÇİN HESAPLATIYORUZ
+    merkez_x = Ekran_Görüntüsü.shape[1]/2 # X İÇİN
+    merkez_x =int(merkez_x)
+    merkez_y = Ekran_Görüntüsü.shape[0] / 2 #  Y İÇİN
+    merkez_y = int(merkez_y)
+
+
+    Alt_degerler =np.array([230,230,230])# yansmmayıengelleyecek kadarbeyaz degerler
+    ust_degerler =np.array([255,255,255])#beyaz renk bu
+
+    Renk_filtresi_sonuc=cv2.inRange(Ekran_Görüntüsü,Alt_degerler,ust_degerler)#alt deger ve üst degerler arasında resimisınırlandırıyor.
+
+    ortalama_x = 0 #beyaz ortalaması x teki
+    ortalama_y = 0 #beyaz ortalaması y deki
+    ortalama_t = 0#beyazları gördüğümüzde ortalamaya dahil edicez if içine girince t yi arttırıcaz
+
+
+    for x in range(Renk_filtresi_sonuc.shape[1]): # X=1 Y=0 OLUYOR TÜM EKRANI ALIRKEN
+        for y in range(Renk_filtresi_sonuc.shape[0]):
+            if(Renk_filtresi_sonuc[y,x] ==255): #EGER BEYAZ EKRAN İSE DEDİK
+                ortalama_x += x
+                ortalama_y += y
+                ortalama_t += 1
+    if(ortalama_t>0): #ortamda beyaz olmazssa ne yapıcağına burada karar verdik ona göre şart koydum
+        ortalama_x /= ortalama_t #bunlar float
+        ortalama_y /= ortalama_t #burası float
+        ortalama_x = int(ortalama_x)
+        ortalama_y = int(ortalama_y)
+
+# BU KISIMDA ARACI YÖNLENDİRİYORUZ YÖNLENDİRME MANTIGI SAGA GİDİNCE SOLA SOLA GİDİNCE ARACI SAĞA ÇEKİYOR
+        x_fark = merkez_x - ortalama_y
+        if(x_fark >=5 ):
+            print("A")
+            PressKey(A) #harfe basıyoruz klavyeden
+        elif(x_fark<=-5):
+            print("D") #ekrana yaz dedikneyi bastığını
+            PressKey(D) #harfe basıyoruz klavyeden
+        else:
+            ReleaseKey (A)# harfe basmayıbırakıyor
+            ReleaseKey (D)#harfe basmayıbırakıyor
+
+
+        cv2.circle(Ekran_Görüntüsü,(ortalama_x,ortalama_y),5,(0,0,255),-1) #-1kalınlık amaçlı #burada kıısımlar intisteniyor!!!#ortasına nokta koyuyoruz buraso hep intistiyor muş
+        cv2.circle(Ekran_Görüntüsü,(merkez_x,merkez_y),5,(255,0,0),-1 )
+
+
+
+        cv2.imshow("ekran",Ekran_Görüntüsü)#BURADA BGR DEN RGB YE DÖNDÜRDÜK
+
+    if cv2.waitKey(25) & 0xFF ==ord('q'): #siyah beyaz göstermemesiiçin bu lazım
+        cv2.destroyAllWindows()
+        break
+--------------------------------------------------------------------------------------------------------------------------------------
+ -not:Diğer fonksiyonumuz ise cv2.inRange fonksiyonudur, bu foksiyonumuz ise girilen değerler arasındaki renkleri seçmeye yarar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TRACKBAR KULLANIMI EKRANA YAZI YAZDIRMA putText var
+import cv2
+import numpy as np
+def nothing(x):
+    pass
+
+cap = cv2.VideoCapture(0)
+
+cv2.namedWindow("frame")
+cv2.createTrackbar("test", "frame", 50, 500, nothing)
+cv2.createTrackbar("color/gray", "frame", 0, 1, nothing)
+
+while True:
+    _, frame = cap.read()
+
+    test = cv2.getTrackbarPos("test", "frame")
+    font = cv2.FONT_HERSHEY_COMPLEX
+    cv2.putText(frame, str(test), (50, 150), font, 2, (255, 0, 0))
+
+    s = cv2.getTrackbarPos("color/gray", "frame")
+    if s == 0:
+        pass
+    else:
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    cv2.imshow("frame", frame)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+-track bar ile hsv kalibrasyonu rek algıma ve ayırma
+import cv2
+import numpy as np
+def nothing(x):
+    pass
+
+cap = cv2.VideoCapture(0)
+cv2.namedWindow("Trackbars")
+
+cv2.createTrackbar("L – H", "Trackbars", 0, 179, nothing)
+cv2.createTrackbar("L – S", "Trackbars", 0, 255, nothing)
+cv2.createTrackbar("L – V", "Trackbars", 0, 255, nothing)
+cv2.createTrackbar("U – H", "Trackbars", 179, 179, nothing)
+cv2.createTrackbar("U – S", "Trackbars", 255, 255, nothing)
+cv2.createTrackbar("U – V", "Trackbars", 255, 255, nothing)
+
+while True:
+    _, frame = cap.read()
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    l_h = cv2.getTrackbarPos("L – H", "Trackbars")
+    l_s = cv2.getTrackbarPos("L – S", "Trackbars")
+    l_v = cv2.getTrackbarPos("L – V", "Trackbars")
+    u_h = cv2.getTrackbarPos("U – H", "Trackbars")
+    u_s = cv2.getTrackbarPos("U – S", "Trackbars")
+    u_v = cv2.getTrackbarPos("U – V", "Trackbars")
+
+    lower_blue = np.array([l_h, l_s, l_v])
+    upper_blue = np.array([u_h, u_s, u_v])
+    mask = cv2.inRange(hsv, lower_blue, upper_blue) #rengi bulup siyah ve beyaz şeklinde ekranda ayırıyor istenilen renk beyaz oluyor
+
+    result = cv2.bitwise_and(frame, frame, mask=mask)  #sadece rengi ayırıyor diğerlerinden
+
+    cv2.imshow("frame", frame)
+    cv2.imshow("mask", mask)
+    cv2.imshow("result", result)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+Trackbar ile old kullanımı
+Treshold:şu değer üzerinine çıkıldığında şu değer yap gibi ,farklı yapılarınıda aşşağıda gösterdim
+import cv2
+import numpy as np
+def nothing(x):
+    pass
+
+img = cv2.imread("x.jpg", cv2.IMREAD_GRAYSCALE)
+cv2.namedWindow("Image")
+cv2.createTrackbar("Threshold value", "Image", 128, 255, nothing)
+
+while True:
+    value_threshold = cv2.getTrackbarPos("Threshold value", "Image")
+    _, threshold_binary = cv2.threshold(img, value_threshold, 255, cv2.THRESH_BINARY)
+    _, threshold_binary_inv = cv2.threshold(img, value_threshold, 255, cv2.THRESH_BINARY_INV)
+    _, threshold_trunc = cv2.threshold(img, value_threshold, 255, cv2.THRESH_TRUNC)
+    _, threshold_to_zero = cv2.threshold(img, value_threshold, 255, cv2.THRESH_TOZERO)
+    _, threshold_to_zero_inv = cv2.threshold(img, value_threshold, 255, cv2.THRESH_TOZERO_INV)
+
+    cv2.imshow("Image", img)
+    cv2.imshow("th binary", threshold_binary)
+    cv2.imshow("th binary inv", threshold_binary_inv)
+    cv2.imshow("th trunc", threshold_trunc)
+    cv2.imshow("th to zero", threshold_to_zero)
+    cv2.imshow("th to zero inv", threshold_to_zero_inv)
+
+    key = cv2.waitKey(100)
+    if key == 27:
+        break
+
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Split =kanalları ayırmaya yarıyor
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+img = cv2.imread("cember4.jpg")
+b, g, r = cv2.split(img)
+
+cv2.imshow("img", img)
+cv2.imshow("b", b)
+cv2.imshow("g", g)
+cv2.imshow("r", r)
+
+plt.hist(b.ravel(), 256, [0, 256]) #figür tablosu oluşturuyor ve renk sklasaını piksel olarak gösteriyor
+
+plt.hist(g.ravel(), 256, [0, 256])
+plt.hist(r.ravel(), 256, [0, 256])
+plt.show()
+
+
+import cv2
+import numpy as np
+img = cv2.imread("cember4.jpg")
+rows, cols, ch = img.shape
+
+print("Height: ", rows)
+print("Width: ", cols)
+
+scaled_img = cv2.resize(img, None, fx=1/2, fy=1/2) #boyut değiştirme
+
+matrix_t = np.float32([[1, 0, -100], [0, 1, -30]])
+translated_img = cv2.warpAffine(img, matrix_t, (cols, rows)) #kenarlardan resimi daraltıyor
+
+matrix_r = cv2.getRotationMatrix2D((cols/2, rows/2), 90, 0.5) #resimi dödürme 0.5=küçültüp büyültme
+rotated_img = cv2.warpAffine(img, matrix_r, (cols, rows)) 
+
+cv2.imshow("Original image", img)
+cv2.imshow("Scaled image", scaled_img)
+cv2.imshow("Translated image", translated_img)
+cv2.imshow("Rotated image", rotated_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+Yandan görünen ekran görüntüsünün önnden bakışını ayarlamak perspektif bakış ayarı(perspektif bakış açısı)
+import cv2
+import numpy as np
+cap=cv2.VideoCapture(0)
+
+while True:
+    _,frame=cap.read()
+    x=print(frame.shape)
+    cv2.circle(frame, (100, 100), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (100, 200), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (200, 100), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (200, 200), 5, (0, 0, 255), -1)
+
+    pts1 = np.float32([[0,0 ], [480, 0], [0,640], [640, 640]])  #bu ekran değerlerini alttaki
+    pts2 = np.float32([[0, 0], [500, 0], [0, 600], [500, 600]]) #ekran aralığına çevir
+
+    matrix = cv2.getPerspectiveTransform(pts1, pts2) #ekran ayarlama ilemi
+    result = cv2.warpPerspective(frame, matrix, (500, 600)) #frameden alınanı martix te dönüştürülen kısıma çevi 500 e 600 ekran layap
+    y=print(result.shape)
+    cv2.imshow("ekran", frame)
+    cv2.imshow("perspektif dönüşüm", result)
+
+
+    Key= cv2.waitKey(1)
+    if Key == 27:
+        break
+cap.release()
+cv2.destroyAllWindows()
+
+
+resimi bükmek
+import cv2
+import numpy as np
+
+img = cv2.imread("cember4.jpg")
+rows, cols, ch = img.shape
+
+cv2.circle(img, (83, 90), 5, (0, 0, 255), -1)
+cv2.circle(img, (447, 90), 5, (0, 0, 255), -1)
+cv2.circle(img, (83, 472), 5, (0, 0, 255), -1)
+
+pts1 = np.float32([[83, 90], [447, 90], [83, 472]])
+pts2 = np.float32([[0, 0], [447, 90], [150, 472]])
+
+matrix = cv2.getAffineTransform(pts1, pts2)
+result = cv2.warpAffine(img, matrix, (cols, rows))
+
+cv2.imshow("Image", img)
+cv2.imshow("Affine transformation", result)
+cv2.waitKey(0)
+cv2.destroyAllWindow
+beyaz sayfa üzerine siyah yazıyı belirginleştirme 
+Adaptif eşiklemede, eşik değerinin nasıl hesaplanacağına karar veren iki yöntem mevcuttur. 
+
+ADAPTIVE_THRESH_MEAN_C: eşik değeri komşu piksellerin alanlarının ortalamasıdır.
+ADAPTIVE_THRESH_GAUSSIAN_C: eşik değeri, ağırlıkların bir gaussian penceresi olduğu komşuluk değerlerinin ağırlıklı toplamıdır.
+
+Blok Boyutu - Komşuluk alanının boyutunu belirler.
+C - Hesaplanan ortalama veya ağırlıklı ortalamadan çıkarılmış bir sabittir.
+
+import cv2
+import numpy as np
+
+img = cv2.imread("cember4.jpg")
+
+_, threshold = cv2.threshold(img, 155, 255, cv2.THRESH_BINARY)
+
+img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+mean_c = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, 12)
+gaus = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 91, 12)
+
+cv2.imshow("Img", img)
+cv2.imshow("Binary threshold", threshold)
+cv2.imshow("Mean C", mean_c)
+cv2.imshow("Gaussian", gaus)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GaussianBlur :bulunduğu pikselin parlaklığını, çevresindeki pikselleri çan eğrisi fonksiyonuyla halvet eyleyip ağırlıklı ortalama alarak düzelten yumuşatma şeklidir
+medianBlur :Görüntü ve sinyal işleme konularında, gürültü temizlemek için kullanılan yöntemlerden birisidir. Amaç belirli bir pencere aralığındaki sayıların ortancasını (median) alarak aşırı büyük atlamaları kaldırmaktır. Yani filitre uygulandıktan sonra resimde bulunan ve komularından belirgin şekilde ayrılan imgeciklerin (piksel) tespit edilerek temizlenmesi sağlanır..
+Bilateral (İki taraflı) Filtering:Bilateral bir filtre, görüntüler için doğrusal olmayan, kenar koruyucu ve gürültü azaltıcı bir yumuşatma filtresidir. Her pikselin yoğunluğunu, yakındaki piksellerden hesapladığı ortalama yoğunluk değerleri ile değiştirir.Bilateral filtreleme ilginç bir kavramdır ve performansı bir Gauss filtresinden çok daha iyidir. Bilateral filtrelemenin iyi tarafı, kenarları koruduğu, Gaussian filtresinin ise her şeyi eşit bir şekilde düzleştirdiği yönündedir.
+blur:genel ortalamayı alıp yumuşatıyor.
+https://medium.com/@abdulsamet.ileri/g%C3%B6r%C3%BCnt%C3%BC-filtrelerini-uygulama-ve-kenarlar%C4%B1-alg%C4%B1lama-21d42f194db4
+
+import cv2
+import numpy as np
+
+img = cv2.imread("cember4.jpg")
+
+averaging = cv2.blur(img, (21, 21))
+gaussian = cv2.GaussianBlur(img, (21, 21), 0)
+median = cv2.medianBlur(img, 5)
+bilateral = cv2.bilateralFilter(img, 9, 350, 350)
+
+cv2.imshow("Original image", img)
+cv2.imshow("Averaging", averaging)
+cv2.imshow("Gaussian", gaussian)
+cv2.imshow("Median", median)
+cv2.imshow("Bilateral", bilateral)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+cv.morphologyEx():
+https://docs.opencv.org/trunk/d9/d61/tutorial_py_morphological_ops.html
+import cv2
+import numpy as np
+
+def nothing(x):
+    pass
+
+cap = cv2.VideoCapture(0)
+cv2.namedWindow("Trackbars")
+
+cv2.createTrackbar("L – H", "Trackbars", 0, 179, nothing)
+cv2.createTrackbar("L – S", "Trackbars", 0, 255, nothing)
+cv2.createTrackbar("L – V", "Trackbars", 0, 255, nothing)
+cv2.createTrackbar("U – H", "Trackbars", 179, 179, nothing)
+cv2.createTrackbar("U – S", "Trackbars", 255, 255, nothing)
+cv2.createTrackbar("U – V", "Trackbars", 255, 255, nothing)
+
+while True:
+    _, frame = cap.read()
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+    l_h = cv2.getTrackbarPos("L – H", "Trackbars")
+    l_s = cv2.getTrackbarPos("L – S", "Trackbars")
+    l_v = cv2.getTrackbarPos("L – V", "Trackbars")
+    u_h = cv2.getTrackbarPos("U – H", "Trackbars")
+    u_s = cv2.getTrackbarPos("U – S", "Trackbars")
+    u_v = cv2.getTrackbarPos("U – V", "Trackbars")
+
+    lower_blue = np.array([l_h, l_s, l_v])
+    upper_blue = np.array([u_h, u_s, u_v])
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+    kernel = np.ones((5, 5), np.uint8)
+    erosion = cv2.erode(mask, kernel)
+    dilation = cv2.dilate(mask, kernel)
+
+    opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=2)
+    closing = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+
+    result = cv2.bitwise_and(frame, frame, mask=mask)
+
+    cv2.imshow("frame", frame)
+    cv2.imshow("mask", mask)
+    cv2.imshow("erosion", erosion)
+    cv2.imshow("dilation", dilation)
+    cv2.imshow("Opening", opening)
+    cv2.imshow("Closing", closing)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+Kenar tespitinde kullanılacak olan Canny için ise threshold1 ve threshold2 değerleri method içerisine girildi ve şekilde gibi gösterdiğim nesne üzerinde kenar tespiti yapılmaktadır.
+import cv2
+import numpy as np
+
+cap = cv2.VideoCapture(0)
+
+while True:
+    _, frame = cap.read()
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    blurred_frame = cv2.GaussianBlur(frame, (5, 5), 0)
+
+    laplacian = cv2.Laplacian(blurred_frame, cv2.CV_64F)
+    canny = cv2.Canny(blurred_frame, 100, 150)
+
+    cv2.imshow("Frame", frame)
+    cv2.imshow("Laplacian", laplacian)
+    cv2.imshow("Canny", canny)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+import cv2
+import numpy as np
+
+img = cv2.imread("cember4.jpg", cv2.IMREAD_GRAYSCALE)
+img = cv2.GaussianBlur(img, (11, 11), 0)
+
+sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0)
+sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1)
+
+laplacian = cv2.Laplacian(img, cv2.CV_64F, ksize=5)
+
+canny = cv2.Canny(img, 100, 150)
+
+cv2.imshow("Image", img)
+cv2.imshow("Sobelx", sobelx)
+cv2.imshow("Sobely", sobely)
+cv2.imshow("Laplacian", laplacian)
+cv2.imshow("Canny", canny)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+import cv2
+import numpy as np
+cap = cv2.VideoCapture(0)
+
+while True:
+    _, frame = cap.read()
+    blurred_frame = cv2.GaussianBlur(frame, (5, 5), 0)
+    hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2HSV)
+
+    lower_blue = np.array([38, 86, 0])
+    upper_blue = np.array([121, 255, 255])
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    for contour in contours:
+        cv2.drawContours(frame, contour, -1, (0, 255, 0), 3)
+
+    cv2.imshow("Frame", frame)
+    cv2.imshow("Mask", mask)
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+
+http://mavienginberk.blogspot.com/2017/06/opencv-dersleri-ders18-kontur-part-1.html
+
+   findContours: Konturlar aynı renk ve yoğunluğa sahip olan tüm kesintisiz noktaları sınır boyunca birleştiren bir eğri olarak basitçe açıklanabilir
+drawContours: bulunan kontorları çiziyor .
+
+import cv2
+import numpy as np
+
+img = cv2.imread("simpsons.jpg")
+gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+template = cv2.imread("barts_face.jpg", cv2.IMREAD_GRAYSCALE)
+w, h = template.shape[::-1]
+
+result = cv2.matchTemplate(gray_img, template, cv2.TM_CCOEFF_NORMED)
+loc = np.where(result >= 0.4)
+
+for pt in zip(*loc[::-1]):
+    cv2.rectangle(img, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 3)
+
+cv2.imshow("img", img)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+[ / python]
+
+
+
+Template
+matching
+Video
+real
+time:
+
+[python]
+import cv2
+import numpy as np
+
+cap = cv2.VideoCapture(0)
+template = cv2.imread("pen.png", cv2.IMREAD_GRAYSCALE)
+w, h = template.shape[::-1]
+
+while True:
+    _, frame = cap.read()
+gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+res = cv2.matchTemplate(gray_frame, template, cv2.TM_CCOEFF_NORMED)
+loc = np.where(res >= 0.7)
+
+for pt in zip(*loc[::-1]):
+    cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 3)
+
+cv2.imshow("Frame", frame)
+
+key = cv2.waitKey(1)
+
+if key == 27:
+    break
+
+cap.release()
+cv2.destroyAllWindows()
+
